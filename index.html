@@ -1,0 +1,2153 @@
+<!DOCTYPE html>
+<html lang="bn" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#4f46e5">
+    <script>try{var __s=JSON.parse(localStorage.getItem("hsc-bangla-flashcards-v1")||"null");var __d=__s&&__s.ui&&__s.ui.theme?__s.ui.theme==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;if(__d)document.documentElement.classList.add("dark")}catch(e){}</script>
+    <title>HSC বাংলা ২য় পত্র: প্র্যাকটিস (শব্দশ্রেণি ও পরিভাষা)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Hind Siliguri & Noto Sans Bengali -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        bangla: ['"Hind Siliguri"', '"Noto Sans Bengali"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 3D Flip Card Styles */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Underlined/Highlighted Target Word Styling */
+        .sentence-text u {
+            text-decoration: none;
+            background: linear-gradient(120deg, rgba(250, 204, 21, 0.35) 0%, rgba(250, 204, 21, 0.5) 100%);
+            border-bottom: 3px solid #eab308;
+            padding: 0 6px;
+            border-radius: 6px;
+            font-weight: 700;
+            color: #9a3412;
+            transition: all 0.2s ease;
+        }
+        .dark .sentence-text u {
+            background: linear-gradient(120deg, rgba(234, 179, 8, 0.25) 0%, rgba(234, 179, 8, 0.4) 100%);
+            border-bottom: 3px solid #facc15;
+            color: #fef08a;
+        }
+
+        .no-scrollbar { scrollbar-width: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        /* --- Responsive foundation (audit fixes) --- */
+        /* Space reserved for the host's fixed "Powered by Netlify" badge (mobile only). Set to 0px once the badge is gone. */
+        :root { --badge-space: 3.5rem; --chrome: 21.5rem; }
+        html { -webkit-text-size-adjust: 100%; }
+        html, body { max-width: 100%; overflow-x: clip; }
+        body { padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+        button, [role="button"] { touch-action: manipulation; }
+        #card-wrap { touch-action: pan-y; }
+        /* Card height follows the real visible viewport (dvh), minus the chrome around it */
+        .card-h { height: clamp(250px, calc(100vh - var(--chrome) - var(--badge-space)), 460px); height: clamp(250px, calc(100dvh - var(--chrome) - var(--badge-space)), 460px); }
+        @media (min-width: 640px) { :root { --badge-space: 0px; } .card-h { height: clamp(300px, 52vh, 420px); height: clamp(300px, 52dvh, 420px); } }
+        @media (min-width: 1024px) { .card-h { height: clamp(330px, 54vh, 460px); height: clamp(330px, 54dvh, 460px); } }
+        @media (max-height: 480px) and (orientation: landscape) { header.sticky { position: static; } .card-h { height: max(220px, calc(100dvh - 9rem)); } }
+        /* 16px form controls stop iOS from zooming the page on focus */
+        @media (max-width: 1023px) { select, input[type="text"] { font-size: 16px !important; } }
+        #filter-body { display: none; }
+        #filter-body.open { display: flex; }
+        @media (min-width: 1024px) { #filter-body { display: flex; } }
+        @media (max-width: 639px) { #app-main { padding-bottom: calc(var(--badge-space) + env(safe-area-inset-bottom, 0px) + 0.75rem); } }
+        /* Filters become a bottom sheet below desktop width */
+        @media (max-width: 1023px) {
+            #filter-body { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; max-height: 85vh; max-height: 85dvh; overflow-y: auto; overscroll-behavior: contain;
+                border-radius: 1.5rem 1.5rem 0 0; padding: 1.25rem 1rem calc(env(safe-area-inset-bottom, 0px) + 1rem); background: #fff; box-shadow: 0 -12px 40px rgba(0,0,0,.25); }
+            .dark #filter-body { background: #1e293b; }
+            #filter-body.open { display: flex; }
+        }
+        button:focus-visible, select:focus-visible, input:focus-visible, #card-wrap:focus-visible { outline: 2px solid #6366f1; outline-offset: 2px; }
+        button:active:not(:disabled) { transform: scale(0.97); }
+        .toast { position: fixed; left: 50%; bottom: calc(var(--badge-space) + env(safe-area-inset-bottom, 0px) + 1rem); max-width: calc(100vw - 2rem); transform: translateX(-50%) translateY(10px); opacity: 0; pointer-events: none; transition: all .25s; z-index: 60; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        @media (min-width: 640px) { .toast { bottom: 2rem; } }
+        @media (prefers-reduced-motion: reduce) { * { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+
+        /* ===== Mobile layout (below desktop width). Same design tokens/components; only layout, grouping, spacing and hierarchy. ===== */
+        :root { --card-bg: #fff; --card-bd: #e2e8f0; }
+        .dark { --card-bg: #1e293b; --card-bd: #334155; }
+        #screen-bar, #setup-panel, #home-actions, #pool-head, #setup-quiz-stats, #chapter-heading { display: none; }
+        @media (max-width: 1023px) {
+            /* page frame: one column, 16px gutters, 16px rhythm, content never stretches into empty rows */
+            #app-main { max-width: 40rem; align-content: start; padding-left: 1rem; padding-right: 1rem; gap: 1rem; }
+            header.sticky > div.max-w-6xl { max-width: 40rem; padding: .5rem 1rem; }
+            #filter-panel { background: transparent; border: 0; box-shadow: none; padding: 0; gap: 1rem; }
+            body:is([data-screen="home"],[data-screen="setup"]) #app-main { display: flex; flex-direction: column; align-items: stretch; }
+
+            /* navigation: sections switcher only where you switch sections (setup, list); back arrow everywhere else */
+            body:is([data-screen="home"],[data-screen="practice"],[data-screen="quiz"]) #mode-nav { display: none; }
+            body:is([data-screen="setup"],[data-screen="list"]) #mode-nav button { padding-top: .375rem; padding-bottom: .375rem; }
+            body:not([data-screen="home"]) #screen-bar { display: flex; align-items: center; gap: .75rem; }
+            body:not([data-screen="home"]) #chapter-bar { display: none; }
+            body:is([data-screen="home"],[data-screen="setup"]) #views { display: none; }
+            body:not([data-screen="practice"]) #view-flashcard,
+            body:not([data-screen="quiz"]) #view-quiz,
+            body:not([data-screen="list"]) #view-list { display: none !important; }
+            #btn-shuffle { display: none !important; }
+
+            /* shared card surface (same tokens as the existing cards) */
+            body:is([data-screen="home"],[data-screen="setup"]) #progress-block,
+            body[data-screen="setup"] #pool-group,
+            body[data-screen="setup"][data-mode="quiz"] #setup-quiz-stats { background: var(--card-bg); border: 1px solid var(--card-bd); border-radius: 1rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / .05); }
+            body:is([data-screen="home"],[data-screen="setup"]) #progress-block { padding: .875rem 1rem; }
+            body:is([data-screen="setup"],[data-screen="list"],[data-screen="quiz"]) #progress-block { display: none; }
+            body[data-screen="setup"] #progress-block { display: block; }
+
+            /* HOME: chapter cards stacked, progress card, actions pinned to the thumb zone */
+            body[data-screen="home"] #chapter-heading { display: block; margin-bottom: .5rem; }
+            #chapter-bar-inner { flex-direction: column; overflow: visible; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; gap: .75rem; }
+            #chapter-bar-inner > button { flex: none; min-width: 0; padding: .875rem; gap: .875rem; }
+            #chapter-bar-inner > button > span:first-child { width: 2.75rem; height: 2.75rem; font-size: 1.125rem; }
+            #chapter-bar-inner .sm\:block { display: block; }
+            #chapter-bar-inner .sm\:hidden { display: none; }
+            #chapter-bar-inner .sm\:inline { display: inline; }
+            body[data-screen="home"] #home-actions { display: flex; flex-direction: column; gap: .5rem; margin-top: auto; }
+            #home-actions .row { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+
+            /* SETUP: progress -> one grouped "what to practise" card -> single primary CTA */
+            body:is([data-screen="home"],[data-screen="practice"],[data-screen="quiz"]) #pool-group { display: none; }
+            body[data-screen="setup"] #pool-group { padding: 1rem; }
+            body[data-screen="setup"] #pool-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .75rem; }
+            body[data-screen="setup"] #pills-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; overflow: visible; margin: 0; padding: 0; }
+            body[data-screen="setup"] #pills-row > button { width: 100%; min-width: 0; justify-content: center; }
+            body[data-screen="setup"] #qpill-onusorgo { grid-column: 1 / -1; order: 98; }
+            body[data-screen="setup"] #filter-toggle { grid-column: 1 / -1; order: 99; }
+            body[data-screen="setup"] #setup-panel { display: flex; margin-top: auto; }
+            body[data-mode="quiz"] #setup-shuffle { display: none; }
+            body[data-screen="setup"][data-mode="quiz"] #setup-quiz-stats { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .75rem 1rem; font-size: .875rem; font-weight: 600; }
+
+            /* PRACTICE / QUIZ: reclaim the space the removed chrome used to take */
+            body[data-screen="practice"] { --chrome: 18.5rem; }
+            body:is([data-screen="practice"],[data-screen="quiz"]) #app-main { gap: .75rem; }
+            body[data-screen="practice"] #filter-panel { gap: 0; }
+            body[data-screen="quiz"] #filter-panel { display: none; }
+
+            /* LIST: search + answers toggle as one tidy block */
+            #view-list > div:first-child { padding: .75rem; gap: .5rem; }
+            #view-list > div:first-child > .relative { flex: 1 1 100%; min-width: 0; }
+            #btn-toggle-answers { flex: 1 1 100%; justify-content: center; }
+        }
+        @media (max-width: 639px) {
+            #sync-status-badge { width: 2rem; height: 2rem; }
+        }
+        @media (max-width: 359px) {
+            body[data-screen="setup"] #pills-row { grid-template-columns: 1fr; }
+            #dock button { font-size: .8125rem; }
+        }
+    </style>
+</head>
+<body data-screen="home" data-mode="flashcard" class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm" style="padding-top:env(safe-area-inset-top,0px)">
+        <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2 sm:py-2.5 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <div class="flex items-center gap-2.5 min-w-0 flex-1 sm:flex-none">
+                <div class="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+                    <i class="fa-solid fa-layer-group text-lg"></i>
+                </div>
+                <div class="min-w-0">
+                    <h1 class="text-base sm:text-xl font-bold tracking-tight truncate bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">বাংলা ২য় পত্র প্র্যাকটিস</h1>
+                    <p id="header-sub" class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">HSC প্রশ্নব্যাংক</p>
+                </div>
+            </div>
+            <nav id="mode-nav" class="order-3 sm:order-none w-full sm:w-auto sm:ml-auto bg-slate-100 dark:bg-slate-700/70 p-1 rounded-xl flex items-center" aria-label="মোড">
+                <button onclick="navMode('flashcard')" id="tab-flashcard" class="flex-1 sm:flex-none px-3 py-2.5 sm:py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 text-sm font-medium bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm"><i class="fa-solid fa-clone"></i><span>ফ্ল্যাশকার্ড</span></button>
+                <button onclick="navMode('quiz')" id="tab-quiz" class="flex-1 sm:flex-none px-3 py-2.5 sm:py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600"><i class="fa-solid fa-bolt"></i><span>কুইজ</span></button>
+                <button onclick="navMode('list')" id="tab-list" class="flex-1 sm:flex-none px-3 py-2.5 sm:py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600"><i class="fa-solid fa-list-check"></i><span>তালিকা</span></button>
+            </nav>
+            <div class="flex items-center gap-2 ml-auto sm:ml-0">
+                <div id="sync-status-badge" class="flex items-center justify-center gap-1.5 w-10 sm:w-auto px-0 sm:px-2.5 h-10 sm:h-9 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-700/80 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600" title="আপনার প্রগ্রেস স্বয়ংক্রিয়ভাবে সংরক্ষিত হচ্ছে">
+                    <i id="sync-icon" class="fa-solid fa-floppy-disk text-emerald-500"></i>
+                    <span id="sync-text" class="hidden md:inline">এই ডিভাইসে সংরক্ষিত</span>
+                </div>
+                <button onclick="toggleTheme()" class="w-10 h-10 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-600 dark:text-amber-400 transition-colors" title="থিম পরিবর্তন করুন" aria-label="থিম পরিবর্তন">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main id="app-main" class="fc flex-1 min-w-0 max-w-6xl w-full mx-auto px-3 sm:px-4 pt-3 pb-4 sm:py-6 grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[320px_minmax(0,1fr)] gap-3 sm:gap-4 lg:gap-6 items-start">
+        <!-- Screen bar (mobile, every screen except Home): back + context -->
+        <div id="screen-bar" class="min-w-0">
+            <button onclick="goBack()" aria-label="ফিরে যান" class="w-10 h-10 shrink-0 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300 transition-colors"><i class="fa-solid fa-arrow-left"></i></button>
+            <span id="screen-title" class="min-w-0 truncate font-bold text-base text-slate-800 dark:text-slate-100"></span>
+        </div>
+
+        <!-- Chapter selector -->
+        <section id="chapter-bar" class="lg:col-span-full min-w-0" aria-label="চ্যাপ্টার">
+            <h2 id="chapter-heading" class="text-xs font-semibold text-slate-500 dark:text-slate-400">চ্যাপ্টার</h2>
+            <div id="chapter-bar-inner" class="flex gap-2 sm:gap-3 overflow-x-auto no-scrollbar snap-x -mx-3 px-3 sm:mx-0 sm:px-0"></div>
+        </section>
+
+
+        <!-- Progress & Filter Panel (sidebar on desktop) -->
+        <section id="filter-panel" class="min-w-0 bg-white dark:bg-slate-800 rounded-2xl p-3 sm:p-4 shadow-sm border border-slate-200/80 dark:border-slate-700/80 max-sm:bg-transparent max-sm:dark:bg-transparent max-sm:border-0 max-sm:shadow-none max-sm:p-0 flex flex-col gap-2.5 sm:gap-3 lg:sticky lg:top-24">
+            <div id="progress-block">
+                <div class="flex items-baseline justify-between text-xs mb-1.5">
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">আপনার অগ্রগতি</span>
+                    <span id="progress-text" class="text-slate-500 dark:text-slate-400">০ / ২০০ আয়ত্ত</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden flex">
+                    <div id="bar-mastered" class="bg-emerald-500 h-full transition-all duration-500" style="width: 0%" title="আয়ত্তে আছে"></div>
+                    <div id="bar-saved" class="bg-amber-400 h-full transition-all duration-500" style="width: 0%" title="সংরক্ষিত"></div>
+                    <div id="bar-review" class="bg-rose-400 h-full transition-all duration-500" style="width: 0%" title="আবার পড়ব"></div>
+                </div>
+            </div>
+
+            <div id="setup-quiz-stats">
+                <span class="text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-bullseye mr-1"></i>স্কোর: <span id="setup-quiz-score">০/০</span></span>
+                <span class="text-amber-500"><i class="fa-solid fa-fire mr-1"></i>স্ট্রিক: <span id="setup-quiz-streak">০</span></span>
+            </div>
+            <div id="pool-group">
+                <div id="pool-head">
+                    <span id="pool-label" class="text-sm font-semibold text-slate-700 dark:text-slate-200">কোন প্রশ্ন অনুশীলন করবেন?</span>
+                    <button id="setup-shuffle" onclick="shuffleDeck(); showToast('কার্ডগুলো এলোমেলো হয়েছে')" class="h-9 px-3 shrink-0 rounded-xl text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-200 flex items-center gap-1.5 shadow-sm transition-all"><i class="fa-solid fa-shuffle text-indigo-500"></i><span>এলোমেলো</span></button>
+                </div>
+            <div id="pills-row" class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-1 px-1 lg:flex-wrap lg:overflow-visible">
+                <button id="filter-toggle" onclick="toggleFilterPanel()" aria-expanded="false" aria-controls="filter-body" class="lg:hidden shrink-0 h-10 px-3 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 text-[13px] font-semibold flex items-center gap-1.5"><i class="fa-solid fa-sliders"></i><span>ফিল্টার</span><span id="filter-active-badge" class="hidden min-w-5 h-5 px-1.5 rounded-full bg-indigo-600 text-white text-[11px] items-center justify-center">০</span><i id="filter-chevron" class="hidden"></i></button>
+                <button onclick="setQuickFilter('all')" id="qpill-all" class="px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap bg-indigo-600 text-white shadow-sm"><i class="fa-solid fa-layer-group"></i> সব প্রশ্ন (<span id="stat-total">২০০</span>)</button>
+                <button onclick="setQuickFilter('saved')" id="qpill-saved" class="px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800"><i class="fa-solid fa-star text-amber-500"></i> সংরক্ষিত (<span id="stat-saved">০</span>)</button>
+                <button onclick="setQuickFilter('review')" id="qpill-review" class="px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800"><i class="fa-solid fa-bookmark text-rose-500"></i> আবার পড়ব (<span id="stat-review">০</span>)</button>
+                <button onclick="setQuickFilter('mastered')" id="qpill-mastered" class="px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"><i class="fa-solid fa-circle-check text-emerald-500"></i> পারি (<span id="stat-mastered">০</span>)</button>
+                <button onclick="setQuickCategory('অনুসর্গ')" id="qpill-onusorgo" class="px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800" title="শুধু অনুসর্গের প্রশ্নগুলো অনুশীলন করুন"><i class="fa-solid fa-wand-magic-sparkles text-purple-500"></i> শুধু অনুসর্গ</button>
+            </div>
+            </div>
+
+            <div id="sheet-backdrop" class="hidden fixed inset-0 z-40 bg-black/40 lg:hidden" onclick="toggleFilterPanel(false)"></div>
+            <div id="filter-body" class="flex-col gap-3" role="dialog" aria-label="ফিল্টার">
+                <div class="lg:hidden flex items-center justify-between">
+                    <span class="font-bold text-base">ফিল্টার</span>
+                    <button onclick="toggleFilterPanel(false)" aria-label="বন্ধ করুন" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div><label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1" for="filter-page">পৃষ্ঠা ও কলাম নির্বাচন:</label>
+                    <select id="filter-page" onchange="applyFilters()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="all">সব পৃষ্ঠা (১ - ২০০)</option>
+                        <option value="p21-left">পৃষ্ঠা ২১ - বাম কলাম (১-২৪)</option>
+                        <option value="p21-right">পৃষ্ঠা ২১ - ডান কলাম (২৫-৫১)</option>
+                        <option value="p22-left">পৃষ্ঠা ২২ - বাম কলাম (৫২-৮৭)</option>
+                        <option value="p22-right">পৃষ্ঠা ২২ - ডান কলাম (৮৮-১২০)</option>
+                        <option value="p23-left">পৃষ্ঠা ২৩ - বাম কলাম (১২১-১৫৮)</option>
+                        <option value="p23-right">পৃষ্ঠা ২৩ - ডান কলাম (১৫৯-২০০)</option>
+                    </select></div>
+                <div><label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1" for="filter-category">শব্দশ্রেণি অনুযায়ী:</label>
+                    <select id="filter-category" onchange="applyFilters()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="all">সকল শব্দশ্রেণি</option>
+                        <option value="বিশেষ্য">বিশেষ্য</option>
+                        <option value="সর্বনাম">সর্বনাম</option>
+                        <option value="বিশেষণ">বিশেষণ</option>
+                        <option value="ক্রিয়া">ক্রিয়া</option>
+                        <option value="ক্রিয়াবিশেষণ">ক্রিয়াবিশেষণ</option>
+                        <option value="অনুসর্গ">অনুসর্গ</option>
+                        <option value="যোজক">যোজক</option>
+                        <option value="আবেগ">আবেগ</option>
+                    </select></div>
+                <div><label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1" for="filter-status">অবস্থা ও সংরক্ষিত তালিকা:</label>
+                    <select id="filter-status" onchange="applyFilters()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="all">সব কার্ড দেখুন</option>
+                        <option value="saved">⭐ সংরক্ষিত প্রশ্ন (Saved)</option>
+                        <option value="review">📌 শুধু 'আবার পড়ব' মার্ক করা</option>
+                        <option value="unmastered">⏳ এখনো আয়ত্ত হয়নি এমন</option>
+                        <option value="mastered">✅ আয়ত্ত করা কার্ডগুলো (পারি)</option>
+                    </select></div>
+                <button onclick="resetProgressModal()" class="text-xs text-rose-500 hover:text-rose-600 dark:text-rose-400 flex items-center gap-1 hover:underline self-start py-1">
+                    <i class="fa-solid fa-rotate-left"></i> প্রগ্রেস রিসেট
+                </button>
+                <button onclick="toggleFilterPanel(false)" class="lg:hidden w-full h-12 rounded-xl bg-indigo-600 text-white font-semibold">ফলাফল দেখুন</button>
+            </div>
+        </section>
+
+        <!-- Practice setup CTA (mobile only) -->
+        <div id="setup-panel" class="min-w-0">
+            <button id="setup-start" onclick="startFromSetup()" class="w-full h-12 rounded-xl bg-indigo-600 text-white font-semibold flex items-center justify-center gap-2 shadow-sm"></button>
+        </div>
+
+        <div id="views" class="min-w-0">
+        <!-- ==================== VIEW 1: FLASHCARD MODE ==================== -->
+        <section id="view-flashcard" class="flex flex-col items-center gap-3 sm:gap-5">
+            
+            <!-- Card Counter & Controls Header -->
+            <div class="w-full max-w-3xl flex items-center justify-between gap-2 px-1">
+                <div class="flex items-center gap-2 min-w-0">
+                    <span id="card-counter-badge" class="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">
+                        কার্ড ১ / ২০০
+                    </span>
+                    <span id="card-page-badge" class="truncate min-w-0 px-2.5 py-1 rounded-full text-xs bg-slate-200/70 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+                        পৃষ্ঠা ২১ (বাম)
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleCurrentCardSaved(event)" id="btn-top-save" class="h-10 min-w-10 justify-center px-2.5 sm:px-3 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-amber-400 text-slate-700 dark:text-slate-200 flex items-center gap-1.5 shadow-sm transition-all" title="পরবর্তীতে অনুশীলনের জন্য সেভ করে রাখুন (কীবোর্ড: S)">
+                        <i id="icon-top-save" class="fa-regular fa-star text-amber-500"></i>
+                        <span id="text-top-save" class="hidden sm:inline">সেভ করুন</span>
+                    </button>
+                    <button id="btn-shuffle" onclick="shuffleDeck()" class="h-10 min-w-10 justify-center px-2.5 sm:px-3 rounded-xl text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-200 flex items-center gap-1.5 shadow-sm transition-all" title="কার্ডগুলো এলোমেলো করুন">
+                        <i class="fa-solid fa-shuffle text-indigo-500"></i>
+                        <span class="hidden sm:inline">এলোমেলো</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3D Flashcard Container -->
+            <div id="card-wrap" tabindex="0" role="button" aria-label="কার্ড উল্টান" class="w-full max-w-3xl card-h perspective-1000 cursor-pointer select-none">
+                <div id="flashcard-inner" class="relative w-full h-full transform-style-3d">
+                    
+                    <!-- FRONT OF CARD -->
+                    <div class="absolute inset-0 w-full h-full backface-hidden bg-white dark:bg-slate-800 rounded-3xl shadow-lg border-2 border-slate-200/80 dark:border-slate-700 p-4 sm:p-10 flex flex-col justify-between transition-colors">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+                                <i class="fa-regular fa-circle-question text-indigo-500"></i> <span id="fc-front-label">নিচে দাগ দেওয়া শব্দটির শ্রেণি কী?</span>
+                            </span>
+                            <div class="flex items-center gap-1.5">
+                                <span id="card-saved-indicator" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300 hidden">
+                                    <i class="fa-solid fa-star mr-1"></i>সংরক্ষিত
+                                </span>
+                                <span id="card-status-indicator" class="text-xs font-medium px-2.5 py-0.5 rounded-full hidden"></span>
+                            </div>
+                        </div>
+
+                        <div class="my-auto text-center px-2">
+                            <p id="card-front-sentence" class="sentence-text text-2xl sm:text-3xl font-semibold leading-relaxed text-slate-800 dark:text-slate-100">
+                                আজ <u>নয়</u> কাল সে/তুমি আসবেই।
+                            </p>
+                        </div>
+
+                        <div class="text-center">
+                            <span class="inline-flex items-center gap-1.5 text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1.5 rounded-full">
+                                <i class="fa-solid fa-rotate"></i> <span class="sm:hidden">ট্যাপ করে উত্তর দেখুন • সোয়াইপে পরের কার্ড</span><span class="hidden sm:inline">উত্তর দেখতে ক্লিক করুন (অথবা Space চাপুন)</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- BACK OF CARD -->
+                    <div class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 text-white rounded-3xl shadow-xl p-4 sm:p-10 flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-medium text-indigo-200 flex items-center gap-1.5">
+                                <i class="fa-solid fa-check-double"></i> <span id="fc-back-label">সঠিক ব্যাকরণিক শব্দশ্রেণি</span>
+                            </span>
+                            <span id="card-back-id" class="text-xs font-mono text-indigo-200 bg-white/10 px-2.5 py-0.5 rounded-full">#1</span>
+                        </div>
+
+                        <div class="my-auto text-center flex flex-col items-center gap-3">
+                            <div class="text-sm text-indigo-100/90 line-clamp-2 max-w-md" id="card-back-sentence-preview"></div>
+                            <div class="bg-white/15 backdrop-blur-sm border border-white/20 px-6 py-3 rounded-2xl shadow-inner">
+                                <h2 id="card-back-answer" class="text-3xl sm:text-4xl font-bold tracking-wide text-amber-300">
+                                    যোজক
+                                </h2>
+                            </div>
+                            <p id="card-back-target" class="text-xs text-indigo-200 mt-1"></p>
+                        </div>
+
+                        <div class="text-center text-xs text-indigo-200">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> প্রশ্নে ফিরতে আবার ক্লিক করুন
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Action & Navigation Controls: in-flow under the card (thumb zone), one row on phones -->
+            <div id="dock" class="w-full max-w-3xl flex items-stretch gap-2 sm:gap-3 sm:justify-between">
+                <div class="contents sm:flex sm:items-center sm:gap-2">
+                    <button onclick="prevCard()" aria-label="পূর্ববর্তী কার্ড" class="order-1 sm:order-none w-12 h-12 sm:w-auto sm:h-auto shrink-0 sm:px-4 sm:py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 font-medium text-sm flex items-center justify-center gap-2 shadow-sm transition-all"><i class="fa-solid fa-arrow-left"></i><span class="hidden sm:inline">পূর্ববর্তী</span></button>
+                    <button onclick="flipCard()" class="hidden sm:flex px-4 py-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 font-medium text-sm items-center justify-center gap-1.5 transition-all"><i class="fa-solid fa-arrows-rotate"></i> উল্টান</button>
+                    <button onclick="nextCard()" aria-label="পরবর্তী কার্ড" class="order-4 sm:order-none w-12 h-12 sm:w-auto sm:h-auto shrink-0 sm:px-4 sm:py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 font-medium text-sm flex items-center justify-center gap-2 shadow-sm transition-all"><span class="hidden sm:inline">পরবর্তী</span><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                <div class="contents sm:flex sm:items-center sm:gap-2">
+                    <button onclick="markCardStatus('review')" id="btn-mark-review" class="order-2 sm:order-none flex-1 sm:flex-initial h-12 sm:h-auto px-2 sm:px-4 sm:py-2.5 rounded-xl border border-rose-300 dark:border-rose-700 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 hover:bg-rose-100 font-semibold sm:font-medium text-sm flex items-center justify-center gap-1.5 transition-all"><i class="fa-solid fa-bookmark"></i> আবার পড়ব</button>
+                    <button onclick="markCardStatus('mastered')" id="btn-mark-mastered" class="order-3 sm:order-none flex-1 sm:flex-initial h-12 sm:h-auto px-2 sm:px-4 sm:py-2.5 rounded-xl border border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 font-semibold sm:font-medium text-sm flex items-center justify-center gap-1.5 transition-all"><i class="fa-solid fa-check"></i> পারি<span class="hidden sm:inline"> (আয়ত্ত)</span></button>
+                </div>
+            </div>
+
+            <!-- Keyboard Shortcuts Hint -->
+            <p class="text-xs text-slate-400 dark:text-slate-500 hidden sm:flex items-center gap-4 mt-1">
+                <span><kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded text-[11px]">Space</kbd> কার্ড উল্টানো</span>
+                <span><kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded text-[11px]">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded text-[11px]">→</kbd> আগের/পরের কার্ড</span>
+                <span><kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded text-[11px]">S</kbd> সংরক্ষিত (Save)</span>
+                <span><kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded text-[11px]">1</kbd> আবার পড়ব</span>
+                <span><kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded text-[11px]">2</kbd> পারি</span>
+            </p>
+        </section>
+
+        <!-- ==================== VIEW 2: QUIZ MODE ==================== -->
+        <section id="view-quiz" class="hidden flex-col items-center gap-5">
+            <div class="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-700 p-4 sm:p-8 flex flex-col gap-4 sm:gap-6">
+                
+                <!-- Quiz Score & Streak Header -->
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-700 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300">
+                            কুইজ মোড
+                        </span>
+                        <span id="quiz-q-num" class="text-xs text-slate-500 dark:text-slate-400">প্রশ্ন #১</span>
+                    </div>
+                    <div class="flex items-center gap-2.5 sm:gap-3 text-sm font-semibold">
+                        <button onclick="toggleQuizCardSaved()" id="btn-quiz-save" class="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-medium flex items-center gap-1 hover:border-amber-400 transition-all" title="এই প্রশ্নটি পরবর্তীতে প্র্যাকটিসের জন্য সেভ করুন">
+                            <i id="icon-quiz-save" class="fa-regular fa-star text-amber-500"></i>
+                            <span id="text-quiz-save">সেভ</span>
+                        </button>
+                        <span class="text-emerald-600 dark:text-emerald-400">
+                            <i class="fa-solid fa-bullseye mr-1"></i>স্কোর: <span id="quiz-score">০/০</span>
+                        </span>
+                        <span class="text-amber-500">
+                            <i class="fa-solid fa-fire mr-1"></i>স্ট্রিক: <span id="quiz-streak">০</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Quiz Question Box -->
+                <div class="text-center py-4 px-2 bg-slate-50 dark:bg-slate-900/60 rounded-2xl border border-slate-100 dark:border-slate-700/60">
+                    <p id="quiz-prompt" class="text-xs text-slate-400 mb-2">নিচের বাক্যে দাগ দেওয়া শব্দটি কোন শব্দশ্রেণির?</p>
+                    <p id="quiz-sentence" class="sentence-text text-xl sm:text-2xl font-semibold text-slate-800 dark:text-slate-100 leading-relaxed">
+                        আজ <u>নয়</u> কাল সে/তুমি আসবেই।
+                    </p>
+                </div>
+
+                <!-- 4 MCQ Options Grid -->
+                <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Dynamically populated options -->
+                </div>
+
+                <!-- Feedback & Next Question Bar -->
+                <div id="quiz-feedback-bar" class="hidden flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 rounded-2xl bg-slate-100 dark:bg-slate-700/60">
+                    <div id="quiz-feedback-text" class="text-sm font-medium"></div>
+                    <button onclick="loadNextQuizQuestion()" class="justify-center px-4 py-3 sm:py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold flex items-center gap-1.5 shadow-sm transition-all">
+                        পরের প্রশ্ন <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 3: LIST / BROWSE MODE ==================== -->
+        <section id="view-list" class="hidden flex-col gap-4">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                <div class="relative flex-1 min-w-[220px]">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="search-input" oninput="renderListView()" placeholder="বাক্য বা উত্তর লিখে খুঁজুন..." class="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <button onclick="toggleAllListAnswers()" id="btn-toggle-answers" class="px-4 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 text-sm font-medium flex items-center gap-2 hover:bg-indigo-100 transition-all">
+                    <i class="fa-solid fa-eye-slash" id="icon-toggle-answers"></i>
+                    <span id="text-toggle-answers">সব উত্তর লুকান</span>
+                </button>
+            </div>
+
+            <div id="list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        </div>
+        <!-- Home actions (mobile only): one primary, two secondary -->
+        <div id="home-actions">
+            <button onclick="navMode('flashcard')" class="w-full h-12 rounded-xl bg-indigo-600 text-white font-semibold flex items-center justify-center gap-2 shadow-sm"><i class="fa-solid fa-clone"></i><span>ফ্ল্যাশকার্ড</span><i class="fa-solid fa-arrow-right"></i></button>
+            <div class="row">
+                <button onclick="navMode('quiz')" class="h-12 rounded-xl text-sm font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-200 flex items-center justify-center gap-1.5 shadow-sm transition-all"><i class="fa-solid fa-bolt text-indigo-500"></i><span>কুইজ</span></button>
+                <button onclick="navMode('list')" class="h-12 rounded-xl text-sm font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-200 flex items-center justify-center gap-1.5 shadow-sm transition-all"><i class="fa-solid fa-list-check text-indigo-500"></i><span>তালিকা</span></button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Confirmation Modal for Reset -->
+    <div id="reset-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-sm w-full p-6 shadow-xl border border-slate-200 dark:border-slate-700 text-center flex flex-col gap-4">
+            <div class="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold">প্রগ্রেস রিসেট করতে চান?</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">এই চ্যাপ্টারের মার্ক করা 'পারি', 'আবার পড়ব' ও সংরক্ষিত তালিকা মুছে যাবে। অন্য চ্যাপ্টার অক্ষত থাকবে।</p>
+            </div>
+            <div class="flex items-center gap-3 pt-2">
+                <button onclick="closeResetModal()" class="flex-1 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-sm font-medium">বাতিল</button>
+                <button onclick="confirmResetProgress()" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium">রিসেট করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practice completion modal -->
+    <div id="complete-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="complete-title">
+        <div id="complete-box" tabindex="-1" class="outline-none bg-white dark:bg-slate-800 rounded-2xl max-w-sm w-full max-h-[calc(100dvh-2rem)] overflow-y-auto p-6 shadow-xl border border-slate-200 dark:border-slate-700 text-center flex flex-col gap-4">
+            <div class="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-check-double"></i>
+            </div>
+            <div>
+                <h3 id="complete-title" class="text-lg font-bold">অনুশীলন শেষ!</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">এই অনুশীলনের সব কার্ড দেখা হয়েছে।</p>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+                <div class="rounded-xl bg-slate-100 dark:bg-slate-700/60 py-2.5"><div id="complete-total" class="text-xl font-bold">০</div><div class="text-[11px] text-slate-500 dark:text-slate-400">মোট কার্ড</div></div>
+                <div class="rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 py-2.5"><div id="complete-mastered" class="text-xl font-bold">০</div><div class="text-[11px]">পারি</div></div>
+                <div class="rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 py-2.5"><div id="complete-review" class="text-xl font-bold">০</div><div class="text-[11px]">আবার পড়ব</div></div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <button id="complete-home" onclick="completionGoHome()" class="w-full h-12 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-sm">হোমে ফিরুন</button>
+                <button onclick="restartPractice()" class="w-full h-12 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-200 text-sm font-medium flex items-center justify-center gap-1.5 shadow-sm transition-all"><i class="fa-solid fa-rotate-left text-indigo-500"></i> আবার অনুশীলন করুন</button>
+                <button onclick="quizFromCompletion()" class="py-1.5 text-sm font-medium text-indigo-600 dark:text-indigo-400 flex items-center justify-center gap-1.5"><i class="fa-solid fa-bolt"></i> কুইজ দিন</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // COMPLETE 200 QUESTIONS DATASET (FROM THE 3 TEXTBOOK PAGES)
+        // =========================================================================
+        const GRAMMAR_CARDS = [
+            // Page 21 - Left Column (1-24)
+            { id: 1, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "আজ <u>নয়</u> কাল সে/তুমি আসবেই। / আজ <u>নয়</u> কাল তাকে আসতেই হবে।", a: "যোজক", cat: "যোজক" },
+            { id: 2, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>ওহে</u> বন্ধু, বিদায়।", a: "সম্বোধনসূচক আবেগ", cat: "আবেগ" },
+            { id: 3, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "তুমি যে আমার <u>কবিতা</u>।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 4, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "আমিন <u>ও</u> সামিন দুই ভাই।", a: "যোজক", cat: "যোজক" },
+            { id: 5, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "এগিয়ে চলেছে প্রতিবাদী <u>মিছিল</u>।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 6, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "দুঃখ <u>বিনা</u> সুখ লাভ হয় কি মহীতে?", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 7, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>মোদের</u> গরব মোদের আশা আ-মরি বাংলা ভাষা।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 8, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>পয়লা বৈশাখ</u> বাঙালির উৎসবের দিন।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 9, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "তারা আজ ধরা পড়ে নূরুল হুদার নাম <u>বলেছে</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 10, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>উঃ!</u> কী যে যন্ত্রণা।", a: "আবেগ", cat: "আবেগ" },
+            { id: 11, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "দেওয়ালের উপর চঞ্চল ছায়া, প্রেতবৎ <u>নাচিতেছে</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 12, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "ধনী <u>মানুষ</u> আইনের ঊর্ধ্বে নয়।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 13, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "দু-মাথায় দুজন প্রৌঢ়া <u>বিধবা</u> লগি ঠেলছে।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 14, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>বিপদ</u> কখনও একা আসে না।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 15, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>সাদা</u> কাপড় পরলেই মন সাদা হয় না।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 16, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>সোনার তরী</u> বিখ্যাত গ্রন্থ।/কাব্যগ্রন্থ", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 17, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "আমায় যদি কান্দাও বন্ধু, তোমার কান্দন <u>পরে</u>।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 18, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>প্রগাঢ়</u> নিকুঞ্জ।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 19, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>যথা</u> ধর্ম, <u>তথা</u> জয়।", a: "সাপেক্ষ যোজক", cat: "যোজক" },
+            { id: 20, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "আমাদের ছোটো গাঁয়ে <u>ছোটো ছোটো</u> ঘর।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 21, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>তুমি</u> যে আমার কবিতা।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 22, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "মাথার <u>উপরে</u> জ্বলিছে সূর্য।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 23, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>ম্লান</u> আলোকে ফুটলি কেনো গোলক চাঁপার ফুল?", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 24, page: "p21-left", pageLabel: "পৃষ্ঠা ২১ (বাম)", q: "<u>হে</u> মহান, তোমাকে অভিবাদন।", a: "সম্বোধনসূচক আবেগ", cat: "আবেগ" },
+
+            // Page 21 - Right Column (25-51)
+            { id: 25, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "তোমায় দেখে <u>প্রীত হলাম</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 26, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>কোথাও</u> আমার হারিয়ে যাওয়ার নেই মানা।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 27, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>এতক্ষণে</u> অরিন্দম কহিলা বিষাদে।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 28, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>সুখ</u> কে না চায়?", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 29, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "আমার <u>ময়না</u> কথা কয় না।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 30, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "বাড়ির সকলে তো রাগিয়া <u>আগুন</u>।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 31, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "একদিন <u>শোনা</u> গেল সে মর-মর।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 32, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "সত্যিকার মানব-কল্যাণ <u>মহৎ</u> চিন্তা-ভাবনারই ফসল।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 33, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "শকুনরা <u>উড়ে এসে</u> বসছে পাতাশূন্য শুকনো গাছটায়।", a: "অসমাপিকা ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 34, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "মাসি বলে, <u>এত</u> রাতে?", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 35, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>আরে!</u> তুমি কখন এলে!", a: "আবেগ", cat: "আবেগ" },
+            { id: 36, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>আহা!</u> বৃষ্টির ঝমঝম বোল।", a: "আবেগ", cat: "আবেগ" },
+            { id: 37, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>কাকডাকা</u> ভোরে তার ঘুম ভেঙে গেল।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 38, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>নিশীথ</u> রাতে বাজছে বাঁশি।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 39, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "ফুল কি <u>ফোটেনি</u> শাখে?", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 40, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>বেশ</u>, তাই হবে।", a: "সিদ্ধান্ত আবেগ", cat: "আবেগ" },
+            { id: 41, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>চাহিয়া দেখিলাম</u>—হঠাৎ কিছু বুঝিতে পারিলাম না।", a: "যৌগিক ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 42, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "আমার <u>সোনার</u> বাংলা আমি তোমায় ভালোবাসি।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 43, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "আকাশে সাদা <u>মেঘ</u> জমেছে।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 44, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "গাছটিতে <u>তিনটি</u> ফুল আর <u>অনেক</u> পাতা ছিল।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 45, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>সদ্যফোটা</u> ফুলগুলো ছিল <u>চমৎকার</u>।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 46, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "অধিক <u>ভোজন</u> অনুচিত।", a: "ক্রিয়া-বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 47, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "শুভ্র সমুজ্জ্বল এ <u>তাজমহল</u>।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 48, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "সে আমার মনে আগুন জ্বালিয়ে <u>দিয়েছিল</u>।", a: "সমাপিকা ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 49, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "<u>শাবাশ!</u> দারুণ খেলেছে আমাদের মেয়েরা/ছেলেরা।", a: "আবেগ", cat: "আবেগ" },
+            { id: 50, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "চুল তার কবেকার <u>অন্ধকার</u> বিদিশার নিশা।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 51, page: "p21-right", pageLabel: "পৃষ্ঠা ২১ (ডান)", q: "বিপন্ন মানবতার <u>পাশে</u> আমাদের দাঁড়ানো উচিত।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+
+            // Page 22 - Left Column (52-87)
+            { id: 52, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>কর্ষিত</u> জমির প্রতিটি শস্যদানা কবিতা।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 53, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>হায় হায়!</u> ওর এখন কী হবে।", a: "আবেগ", cat: "আবেগ" },
+            { id: 54, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "আকাশে বিদ্যুৎ <u>চমকায়</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 55, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "গাড়িটা <u>বেশ</u> জোরে চলছে।", a: "ভাববাচক বিশেষণ", cat: "বিশেষণ" },
+            { id: 56, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "আমি যে এসেছি একাত্তরের <u>মুক্তিযুদ্ধ</u> থেকে।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 57, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>ফেলে দিল</u> রাত্রে-গাঁথা সেঁউতি ফুলের মালা।", a: "যৌগিক ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 58, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>অনলে</u> পুড়িয়া গেল।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 59, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>পায়েহাঁটা</u> পথ ধরে সোজা এগিয়ে গেলাম।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 60, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "সবাই কক্সবাজার <u>যেতে চাইছে</u>।", a: "যৌগিক ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 61, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "কাজটা <u>ভালোভাবে</u> সম্পন্ন হয়নি।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 62, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "আকাশটা <u>কালো</u> মেঘে ঢাকা।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 63, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "আজ <u>খুব</u> ঠান্ডা লাগছে।", a: "ভাববাচক বিশেষণ", cat: "বিশেষণ" },
+            { id: 64, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "সূর্যকিরণ <u>শুষিতেছে</u> জল।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 65, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>বুঝিয়াছিলাম</u> মেয়েটির রূপ বড়ো আশ্চর্য।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 66, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "আর আমি লজ্জায় জানালার বাহিরে মুখ বাড়াইয়া <u>প্রকৃতির</u> শোভা দেখিতে লাগিলাম।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 67, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "ও রকম বিনয়ের চেয়ে অহংকারের <u>পৌরুষ</u> অনেক অনেক ভালো।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 68, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "অতএব আমাদের <u>দৃষ্টিভঙ্গি</u> পাল্টাতে হবে।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 69, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "কিন্তু উত্তেজনায় <u>উঠে বসলাম</u>।", a: "যৌগিক ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 70, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>বাঃ/বাহ!</u> আমাদের মেয়েরা দারুণ খেলেছে।", a: "আবেগ", cat: "আবেগ" },
+            { id: 71, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "বিরাট <u>দুঃসাহসেরা</u> দেয় যে উঁকি।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 72, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>অনেকক্ষণ ধরে</u> মাঠে হাঁটছি।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 73, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>আহা!</u> বেচারার কত কষ্ট।", a: "আবেগ", cat: "আবেগ" },
+            { id: 74, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>রোগা</u> মানুষ সমস্ত রাত খেতে পাবে না।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 75, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "মামার মন <u>নরম</u> হইল।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 76, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>মানুষ-ধর্ম</u> সবচেয়ে বড় ধর্ম।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 77, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>নাচতে</u> না <u>জানলে</u> উঠোন বাঁকা।", a: "অসমাপিকা ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 78, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>সবাই</u> রাঙামাটি যেতে চাইছে।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 79, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "অনেকেই ভাতের <u>বদলে</u> রুটি খায়।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 80, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "মন্ত্রের সাধন <u>কিংবা</u> শরীর পাতন।", a: "যোজক", cat: "যোজক" },
+            { id: 81, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>বাঃ!</u> চমৎকার একটা দৃশ্য দেখলাম।", a: "আবেগ", cat: "আবেগ" },
+            { id: 82, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "সে <u>নিজে</u> অঙ্কটা করেছে।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 83, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "তুমি <u>আর</u> আমি প্রতিদিন কলেজে যাই।", a: "যোজক", cat: "যোজক" },
+            { id: 84, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "ছেলেটা <u>জোরে</u> চিৎকার করে উঠল।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 85, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>নীল</u> আকাশের নিচে বসে আছি।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 86, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "আগামীকাল তুমি একবার <u>এসো</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 87, page: "p22-left", pageLabel: "পৃষ্ঠা ২২ (বাম)", q: "<u>ময়না পাখি</u> কথা বলতে পারে।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+
+            // Page 22 - Right Column (88-120)
+            { id: 88, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "বাংলাদেশের <u>প্রাকৃতিক</u> সৌন্দর্য অতুলনীয়।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 89, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "চলো <u>কোথাও</u> একটু ঘুরে আসি।", a: "অনির্দিষ্ট সর্বনাম", cat: "সর্বনাম" },
+            { id: 90, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "ফুল <u>বিনা</u> মালা হয় না।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 91, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>পয়লা বৈশাখ</u> বাঙালির উৎসবের দিন।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 92, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>পড়ন্ত</u> বিকেলে হাঁটতে ভালো লাগে।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 93, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>ঢাকা</u> বাংলাদেশের <u>রাজধানী</u>।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 94, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "আমাদের সমাজ <u>আর</u> ওদের সমাজ এক রকম নয়।", a: "যোজক", cat: "যোজক" },
+            { id: 95, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>বাহবা!</u> আমাদের দল খেলায় জিতেছে।", a: "আবেগ", cat: "আবেগ" },
+            { id: 96, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>গুঁড়ি গুঁড়ি</u> বৃষ্টি হচ্ছে।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 97, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>শাবাশ!</u> দারুণ কাজ করেছ।", a: "আবেগ", cat: "আবেগ" },
+            { id: 98, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "সানজিদা <u>দ্রুত</u> দৌড়াতে পারে।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 99, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>বাঃ!</u> বড়ো চমৎকার ছবি এঁকেছ তো।", a: "আবেগ শব্দ", cat: "আবেগ" },
+            { id: 100, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>ধান</u> ভানতে শিবের গীত গেয়ো না।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 101, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>পায়ে হাঁটা</u> পথ ধরে সোজা এগিয়ে চললাম।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 102, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>দারুণ</u> সুন্দর দেখতে।", a: "ভাববাচক বিশেষণ", cat: "বিশেষণ" },
+            { id: 103, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "কাজটা <u>ভালোভাবে</u> সম্পন্ন হয়েছে।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 104, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "সুখের <u>লাগিয়া</u> এ ঘর বাঁধিনু।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 105, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "এ মাসে <u>নয়</u>, আগামী মাসে তুমি যাবে।", a: "যোজক", cat: "যোজক" },
+            { id: 106, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>বাংলাদেশ</u> আমাদের মাতৃভূমি।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 107, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>বাহ্!</u> কী সুন্দর দৃশ্য।", a: "আবেগ", cat: "আবেগ" },
+            { id: 108, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "হঠাৎ <u>গুঁড়িগুঁড়ি</u> বৃষ্টি শুরু হলো।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 109, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>লাল রঙের</u> ফুলে ছেয়ে গেছে বাগান।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 110, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>রবীন্দ্রনাথ</u> তো আর দুজন হয় না।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 111, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "তিনি <u>হো হো করে</u> হেসে উঠলেন।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 112, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "কারণ <u>ছাড়া</u> কার্য হয় না।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 113, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "ট্রেনটা এখনই <u>এসে পড়বে</u>।", a: "যৌগিক ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 114, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>নদীর বুকে</u> চর জেগেছে।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 115, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "এত চিনি দিলাম <u>তবু</u> মিষ্টি হলো না।", a: "যোজক", cat: "যোজক" },
+            { id: 116, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "আমাদের যাত্রা সমুদ্র <u>অভিমুখে</u>।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 117, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "তার মায়ের হাতের পিঠা যেন <u>অমৃত</u>।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 118, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "হঠাৎ সে দেখতে পেল চলন্ত বাস থেকে যাত্রীরা <u>লাফিয়ে</u> নামছে।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 119, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>বাঃ!</u> চমৎকার একটা গল্প লেখেছ।", a: "আবেগ", cat: "আবেগ" },
+            { id: 120, page: "p22-right", pageLabel: "পৃষ্ঠা ২২ (ডান)", q: "<u>করিম ও রহিম</u> দুই ভাই।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+
+            // Page 23 - Left Column (121-158)
+            { id: 121, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>ভালো</u> আমটি খাও।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 122, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "খাঁচার <u>ভিতর</u> অচিন পাখি, কেমনে আসে যায়।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 123, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "রবীন্দ্রনাথ তো আর <u>দুজন</u> হয় না।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 124, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "গ্রামটি গত বছর বন্যায় <u>ভেসে গিয়েছিল</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 125, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "বিপদে মোরে রক্ষা <u>কর</u> এ নহে মোর প্রার্থনা।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 126, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "কাব্য জগতে যার নাম আনন্দ, তারই নাম <u>বেদনা</u>।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 127, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>মরি মরি!</u> কী রূপ মাধুরী।", a: "আবেগ", cat: "আবেগ" },
+            { id: 128, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>সবাই</u> গেছে বনে।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 129, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "নীল-হলুদ-বেগুনি <u>অথবা</u> সাদা।", a: "যোজক", cat: "যোজক" },
+            { id: 130, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>অপরের</u> ক্ষতি করো না।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 131, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "মা শিশুকে চাঁদ <u>দেখাচ্ছেন</u>।", a: "প্রযোজক ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 132, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "তাকে <u>ছাড়া</u> তুমি চলতে পারবে না।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 133, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>সবাই</u> জীবনে জয়ী হতে চায়।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 134, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "উদয়াস্ত পরিশ্রম করব, <u>তথাপি</u> ভিক্ষা করব না।", a: "যোজক", cat: "যোজক" },
+            { id: 135, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "ডাক্তার অসুস্থ, <u>তিনি</u> রোগী দেখতে আসবেন না।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 136, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "বাহ! বড়ো চমৎকার ছবি <u>একেঁছে</u> তো।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 137, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>যদি</u> দূরে চলে যাই <u>তবু</u> মনে রেখ।", a: "যোজক", cat: "যোজক" },
+            { id: 138, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "আজ জোছনা রাতে <u>সবাই</u> গেছে বনে।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 139, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "মাথার <u>উপরে</u> নীলাকাশ।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 140, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "সাদা <u>বা</u> কালো।", a: "যোজক", cat: "যোজক" },
+            { id: 141, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "কোথাও <u>কেউ</u> নেই।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 142, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "সোনিয়ার <u>সাহস</u> আছে।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 143, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "সানজারের <u>কাছে</u> কলমটা নেই।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 144, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "সিক্ত <u>নীলাম্বরী</u>।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 145, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>পুলকিত</u> সচ্ছলতা।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 146, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "তিনটি ফুল <u>আর</u> অনেক পাতা।", a: "যোজক", cat: "যোজক" },
+            { id: 147, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>তুমি</u> আমার পূর্ববাংলা।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 148, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "নিপুণ দক্ষতায় <u>কাজটি</u> শেষ হলো।", a: "সর্বনাম (বই অনুযায়ী) / বিশেষ্য", cat: "সর্বনাম" },
+            { id: 149, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>খুব</u> সাবধানে পথ চলবে।", a: "ভাব বিশেষণ", cat: "বিশেষণ" },
+            { id: 150, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "ওরা <u>পরস্পর</u> আত্মীয়।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 151, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "আমি <u>আগামীকাল</u> বাড়ি যাব।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 152, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>প্রচণ্ডবেগে</u> ঝড় ধেয়ে আসল।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 153, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "লোকটি ধনী <u>কিন্তু</u> সুখী নন।", a: "যোজক", cat: "যোজক" },
+            { id: 154, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "মন <u>দিয়ে</u> লেখাপড়া কর।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 155, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "তিনি বিদ্বান <u>অথচ</u> সৎ ব্যক্তি নন।", a: "যোজক", cat: "যোজক" },
+            { id: 156, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "<u>যদি</u> বারণ কর <u>তবে</u> আসব না।", a: "যোজক", cat: "যোজক" },
+            { id: 157, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "সে অল্পক্ষণ <u>ঘুমোয়</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 158, page: "p23-left", pageLabel: "পৃষ্ঠা ২৩ (বাম)", q: "আমার <u>কাছে</u> অর্থের কোন মূল্য নেই।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+
+            // Page 23 - Right Column (159-200)
+            { id: 159, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>যত</u> গর্জে <u>তত</u> বর্ষে না।", a: "সাপেক্ষ যোজক", cat: "যোজক" },
+            { id: 160, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>শাবাশ!</u> চমৎকার রেজাল্ট করেছ।", a: "আবেগ", cat: "আবেগ" },
+            { id: 161, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "হৈমন্তী গান <u>গাইছে</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 162, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "যাত্রীরা <u>স্ব স্ব</u> আসনে গিয়ে বসলেন।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 163, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "আকাশে <u>এক ঝাঁক</u> পাখি উড়ছে।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 164, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "কারা যেন <u>গুনগুনিয়ে</u> গান গাইছিল।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 165, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "বোনের <u>জন্য</u> এই বইটা এনেছি।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 166, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>হুঁ</u>, যুক্তিটা মন্দ মনে হচ্ছে না।", a: "আবেগ", cat: "আবেগ" },
+            { id: 167, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "আজ বাংলাদেশ <u>বনাম</u> আয়ারল্যান্ডের খেলা।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 168, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>আপনারে</u> লয়ে বিব্রত রহিতে আসে নাই কেহ অবনি পরে।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 169, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "জলধি <u>অভিমুখে</u> রাজপুত্র অভিযাত্রা করলেন।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 170, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>চিকচিক</u> করে বালি কোথা নাই কাদা।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 171, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>গরিবকে</u> সাহায্য করা উচিত।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 172, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "সব <u>বস্তিতেই</u> এখন টিউবওয়েল বসেছে।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 173, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "তুমি ঢাকা <u>গিয়েছিলে</u>?", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 174, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "তিনি <u>অভিজ্ঞ</u> মিস্ত্রি।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 175, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>যত</u> চাও <u>তত</u> লও তরণী পরে।", a: "সাপেক্ষ যোজক", cat: "যোজক" },
+            { id: 176, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>মেটে</u> কলসিতে পানি ঠান্ডা থাকে।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 177, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "তাড়াতাড়ি যাও <u>নতুবা</u> তাকে পাবে না।", a: "যোজক", cat: "যোজক" },
+            { id: 178, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "সেলিমের <u>ঘুম</u> এল না মোটেই।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 179, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "এবার পাথর যেন <u>নড়ে</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 180, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "এ জনমের <u>তরে</u> বিদায় নিলাম।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 181, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "রবীন্দ্রনাথ ঠাকুর <u>স্বয়ং</u> গীতাঞ্জলির ইংরেজি অনুবাদ করেছিলেন।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 182, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "রুমি <u>কিংবা</u> সুমি কেউ-ই একাজ করতে পারে না।", a: "যোজক", cat: "যোজক" },
+            { id: 183, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "ভূতের ভয়ে নাজমা <u>দ্রুত</u> দৌড়াতে লাগলো।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 184, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>ভালো</u> ছাত্ররা পড়াশোনায় মনোযোগী হয়।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 185, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>সুস্থ-সবল</u> দেহকে কে না ভালোবাসে।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 186, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>ধীরে ধীরে</u> বায়ু বয়।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 187, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>উড়ন্ত</u> পাখি।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 188, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "হয় টাকা ছাড় <u>নচেৎ</u> ঘর ছেড়ে দাও।", a: "যোজক", cat: "যোজক" },
+            { id: 189, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>ভালো</u> বাড়ি পাওয়া কঠিন।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 190, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>মন্দ</u> কথা বলতে নেই।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 191, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "তোমার এ <u>পুণ্য</u> প্রচেষ্টা সফল হোক।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 192, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "অনেকেই ভাতের <u>বদলে</u> রুটি খায়।", a: "অনুসর্গ", cat: "অনুসর্গ" },
+            { id: 193, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "শরতের এই আকাশ মনকে <u>উদাস</u> করে দেয়।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 194, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "বাবা সকালে দ্রুত বেরিয়ে <u>গেলেন</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" },
+            { id: 195, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "এই আমার <u>মা</u>।", a: "বিশেষ্য", cat: "বিশেষ্য" },
+            { id: 196, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "<u>ইনি</u> আমার কাকা।", a: "সর্বনাম", cat: "সর্বনাম" },
+            { id: 197, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "ট্রেন <u>দ্রুত</u> চলতে লাগল।", a: "ক্রিয়াবিশেষণ", cat: "ক্রিয়াবিশেষণ" },
+            { id: 198, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "দৃশ্যটি বড়োই <u>সুন্দর</u>।", a: "বিশেষণ", cat: "বিশেষণ" },
+            { id: 199, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "সুখ <u>ও</u> সমৃদ্ধি কে না চায়?", a: "যোজক", cat: "যোজক" },
+            { id: 200, page: "p23-right", pageLabel: "পৃষ্ঠা ২৩ (ডান)", q: "মেঘ <u>ডাকে</u>।", a: "ক্রিয়া", cat: "ক্রিয়া" }
+        ];
+        const TERMS_CARDS = [
+            { id: 1, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Alphabet", a: "বর্ণমালা", cat: "A", meta: "চ.বো.'২৫" },
+            { id: 2, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Ad-hoc", a: "তদর্থক/অনানুষ্ঠানিক", cat: "A", meta: "সি.বো.'২৫; দি.বো.'২২; ব.বো.'১৯; চ.বো.'১৭" },
+            { id: 3, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Aid", a: "সাহায্য", cat: "A", meta: "সি.বো.'২৫, ২৩" },
+            { id: 4, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Appendix", a: "পরিশিষ্ট", cat: "A", meta: "কু.বো.'২৫; য.বো.'২৪" },
+            { id: 5, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Attestation", a: "সত্যায়ন", cat: "A", meta: "ব.বো.'২৫" },
+            { id: 6, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Auction", a: "নিলাম", cat: "A", meta: "দি.বো.'২৫; সি.বো.'২২" },
+            { id: 7, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Adviser", a: "উপদেষ্টা", cat: "A", meta: "ম.বো.'২৫" },
+            { id: 8, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Acting", a: "ভারপ্রাপ্ত", cat: "A", meta: "আলিম'২৫; য.বো.'২৩; ঢা. বো., য.বো.'২২" },
+            { id: 9, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Architecture", a: "স্থাপত্যবিদ্যা/স্থাপত্য", cat: "A", meta: "ঢা.বো.'২৪" },
+            { id: 10, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Appearance", a: "দৃষ্টিগোচরতা/উপস্থিতি", cat: "A", meta: "চ.বো.'২৪" },
+            { id: 11, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Academy", a: "শিক্ষায়তন/বিদ্যানিকেতন", cat: "A", meta: "ব.বো.'২৪; দি.বো.'২৩" },
+            { id: 12, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Art", a: "কলা/শিল্পকর্ম", cat: "A", meta: "রা.বো.'২৩" },
+            { id: 13, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Acid", a: "অম্ল", cat: "A", meta: "রা.বো., কু.বো.'২৩" },
+            { id: 14, page: "p68-left", pageLabel: "পৃষ্ঠা ৬৮ (বাম)", q: "Ability", a: "সামর্থ্য", cat: "A", meta: "ম.বো.'২৩" },
+            { id: 15, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Audio", a: "শ্রুতি/শ্রাব্য", cat: "A", meta: "ঢা.বো., রা.বো.'২২" },
+            { id: 16, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Autograph", a: "স্বাক্ষর/স্বহস্তলিপি", cat: "A", meta: "চ.বো.'২২; দি.বো.'১৯" },
+            { id: 17, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Accessories", a: "সরঞ্জাম", cat: "A", meta: "চ.বো.'২২" },
+            { id: 18, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Act", a: "আইন", cat: "A", meta: "দি.বো.'২২" },
+            { id: 19, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Annexation", a: "সংযোজন/সংযুক্তি", cat: "A", meta: "রা.বো.'১৯; কু.বো.'১৭" },
+            { id: 20, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Abstract", a: "বিমূর্ত/সারসংক্ষেপ", cat: "A", meta: "সকল বো.'১৮" },
+            { id: 21, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Allegation", a: "অভিযোগ", cat: "A", meta: "ঢা.বো.'১৭" },
+            { id: 22, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Bankrupt", a: "দেউলিয়া", cat: "B", meta: "রা.বো.'২৫, ২২; চ.বো.'২৫, ১৭" },
+            { id: 23, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Book-post", a: "খোলা-ডাক", cat: "B", meta: "সি.বো.'২৫; ম.বো.'২৪; ব.বো.'২৩" },
+            { id: 24, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Bidder", a: "নিলামকারী", cat: "B", meta: "ব.বো.'২৫; সকল বো.'১৮" },
+            { id: 25, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Brand", a: "মার্কা/ছাপ", cat: "B", meta: "কু.বো.'২৫; য.বো., দি.বো.'২৪" },
+            { id: 26, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Bibliography", a: "রচনাপঞ্জি/গ্রন্থপঞ্জি", cat: "B", meta: "দি.বো.'২৫" },
+            { id: 27, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Bio-data", a: "জীবনবৃত্তান্ত", cat: "B", meta: "ম.বো.'২৫" },
+            { id: 28, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Basic-pay", a: "মূল-বেতন", cat: "B", meta: "কু.বো.'২৫, ২৪" },
+            { id: 29, page: "p68-right", pageLabel: "পৃষ্ঠা ৬৮ (ডান)", q: "Bacteria", a: "জীবাণু", cat: "B", meta: "ঢা.বো.'২৪" },
+            { id: 30, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Banquet", a: "ভোজসভা/ভুরিভোজ", cat: "B", meta: "চ.বো.'২৪; রা.বো.'১৯; সি.বো.'১৭" },
+            { id: 31, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Booklet", a: "পুস্তিকা", cat: "B", meta: "ব.বো.'২৪; সি.বো.'২২" },
+            { id: 32, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Ballot", a: "ভোট", cat: "B", meta: "দি.বো., ম.বো.'২৪" },
+            { id: 33, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Bond", a: "প্রতিজ্ঞাপত্র, চুক্তি", cat: "B", meta: "ম.বো.'২৪" },
+            { id: 34, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Biography", a: "জীবনী/জীবনচরিত", cat: "B", meta: "ঢা.বো., সি.বো.'২৩; য.বো.'২২; রা. বো., দি.বো.'১৭" },
+            { id: 35, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Boycott", a: "বর্জন", cat: "B", meta: "রা.বো.'২৩" },
+            { id: 36, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "By-law", a: "উপ-আইন/উপ-ধারা/উপবিধি", cat: "B", meta: "ব.বো.'২৩" },
+            { id: 37, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Balcony", a: "ঝুল-বারান্দা/বারান্দা", cat: "B", meta: "কু.বো.'২৩" },
+            { id: 38, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Bail", a: "জামিন", cat: "B", meta: "দি.বো.'২৩; ম.বো.'২২; ঢা.বো.'১৭" },
+            { id: 39, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Bulletin", a: "জ্ঞাপন-পত্র/বুলেটিন", cat: "B", meta: "ঢা.বো., রা.বো., য.বো.'১৯" },
+            { id: 40, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "By-election", a: "উপ-নির্বাচন", cat: "B", meta: "রা.বো.'১৯" },
+            { id: 41, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Bilingual", a: "দ্বিভাষিক", cat: "B", meta: "দি.বো.'১৯" },
+            { id: 42, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Chancellor", a: "আচার্য", cat: "C", meta: "রা.বো.'২৫" },
+            { id: 43, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Catalogue", a: "তালিকা/গ্রন্থতালিকা", cat: "C", meta: "চ.বো.'২৫, ১৯; কু.বো.'২৫, ২৪, ২৩, ১৭; য.বো., সি.বো.'১৯" },
+            { id: 44, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Comet", a: "ধূমকেতু", cat: "C", meta: "চ.বো.'২৫; দি.বো.'১৯" },
+            { id: 45, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Cartoon", a: "ব্যঙ্গচিত্র", cat: "C", meta: "সি.বো.'২৫, ২৩; ঢা.বো.'২২" },
+            { id: 46, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Circle", a: "বৃত্ত", cat: "C", meta: "সি.বো.'২৫; চ.বো.'১৭" },
+            { id: 47, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Copyright", a: "লেখস্বত্ব/গ্রন্থস্বত্ব", cat: "C", meta: "ব.বো.'২৫; য.বো.'২৩; রা.বো., সি.বো.'২২" },
+            { id: 48, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Cargo", a: "মাল", cat: "C", meta: "দি.বো.'২৫" },
+            { id: 49, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Cabinet", a: "মন্ত্রিপরিষদ", cat: "C", meta: "আলিম'২৫; য.বো.'২৩; কু.বো.'২২" },
+            { id: 50, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Curfew", a: "সান্ধ্য আইন", cat: "C", meta: "ঢা.বো.'২৪" },
+            { id: 51, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Consequence", a: "ফলাফল/পরিণাম", cat: "C", meta: "চ.বো.'২৪" },
+            { id: 52, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Colony", a: "উপনিবেশ", cat: "C", meta: "চ.বো.'২৪" },
+            { id: 53, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Capital", a: "পুঁজি/মূলধন", cat: "C", meta: "ব.বো.'২৪; ম.বো.'২৩" },
+            { id: 54, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Census", a: "আদমশুমারি", cat: "C", meta: "আলিম'২৪" },
+            { id: 55, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Constitution", a: "গঠনতন্ত্র/সংবিধান", cat: "C", meta: "আলিম'২৪" },
+            { id: 56, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Civil", a: "দেওয়ানি/বেসামরিক", cat: "C", meta: "ম.বো.'২৩" },
+            { id: 57, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Caption", a: "শিরোনাম", cat: "C", meta: "চ.বো.'২২" },
+            { id: 58, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Custom", a: "প্রথা/আচার/রীতি", cat: "C", meta: "ঢা.বো.'১৯" },
+            { id: 59, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Correspondent", a: "সংবাদদাতা/প্রতিনিধি", cat: "C", meta: "রা.বো., কু.বো.'১৯" },
+            { id: 60, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Code", a: "সংকেত", cat: "C", meta: "চ.বো.'১৯" },
+            { id: 61, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Cold war", a: "স্নায়ু যুদ্ধ", cat: "C", meta: "সকল বো.'১৮" },
+            { id: 62, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Dynamic", a: "গতিশীল/গভীর", cat: "D", meta: "রা.বো.'২৫, ২২, ১৯; ব.বো.'২৪; কু.বো.'২২" },
+            { id: 63, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Dialect", a: "উপভাষা", cat: "D", meta: "রা.বো.'২৫, ১৭; সি.বো.'২৫, ২২, ১৭; ব.বো.'২৫; কু.বো.'২৫; দি.বো.'২৩, ২২; দি.বো.'১৯; য.বো.'১৭" },
+            { id: 64, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Data", a: "উপাত্ত/তথ্য", cat: "D", meta: "রা.বো.'২৫; ব.বো.'১৯" },
+            { id: 65, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Diplomatic", a: "কূটনৈতিক", cat: "D", meta: "চ.বো.'২৫" },
+            { id: 66, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Dual", a: "দ্বৈত", cat: "D", meta: "চ.বো.'২৫" },
+            { id: 67, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Delta", a: "ব-দ্বীপ", cat: "D", meta: "দি.বো.'২৫; ব.বো.'২৪" },
+            { id: 68, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Deputation", a: "প্রতিনিধি/প্রেষণ", cat: "D", meta: "আলিম'২৫; রা.বো.'২৪; সি.বো.'২৩" },
+            { id: 69, page: "p69-left", pageLabel: "পৃষ্ঠা ৬৯ (বাম)", q: "Diplomacy", a: "কূটনীতি", cat: "D", meta: "ঢা.বো.'২৪" },
+            { id: 70, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Decimal", a: "দশমিক", cat: "D", meta: "চ.বো.'২৪" },
+            { id: 71, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Deed of gift", a: "দানপত্র", cat: "D", meta: "কু.বো., ম.বো.'২৪; ব.বো.'২৩" },
+            { id: 72, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Deed", a: "দলিল/চুক্তি", cat: "D", meta: "দি.বো.'২৪; ম.বো.'২৩; ঢা.বো.'২২" },
+            { id: 73, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Dialogue", a: "সংলাপ", cat: "D", meta: "চ.বো.'২৩" },
+            { id: 74, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Documentary", a: "প্রামাণ্য", cat: "D", meta: "য.বো.'২৩; ব.বো.'২২" },
+            { id: 75, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Date", a: "তারিখ", cat: "D", meta: "কু.বো.'২৩" },
+            { id: 76, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Debt", a: "ঋণ/ধার", cat: "D", meta: "ম.বো.'২৩" },
+            { id: 77, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Debate", a: "বিতর্ক", cat: "D", meta: "চ.বো.'১৭" },
+            { id: 78, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Ethics", a: "নীতিবিদ্যা", cat: "E", meta: "ঢা.বো., দি.বো.'২৫; চ.বো.'২৪, ২৩; ব. বো., কু.বো.'২৩; য.বো.'২২; রা.বো., ব.বো., য.বো.'১৯" },
+            { id: 79, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Eye-wash", a: "ধোঁকা", cat: "E", meta: "ঢা.বো.'২৫; সি.বো.'২৩, ১৭; রা.বো.'১৯, চ.বো.'১৭" },
+            { id: 80, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Embargo", a: "নিষেধাজ্ঞা", cat: "E", meta: "রা.বো., সি.বো.'২৫; ব.বো.'২৩; সকল বো.'১৮; রা.বো., দি.বো.'১৭" },
+            { id: 81, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Editor", a: "সম্পাদক", cat: "E", meta: "রা.বো., আলিম'২৫; কু.বো.'২৫, ২৪" },
+            { id: 82, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Equation", a: "সমীকরণ", cat: "E", meta: "ব.বো.'২৫" },
+            { id: 83, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Expert", a: "বিশেষজ্ঞ", cat: "E", meta: "ঢা.বো.'২৪" },
+            { id: 84, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Equality", a: "সমতা", cat: "E", meta: "রা.বো.'২৪; দি.বো.'২৩" },
+            { id: 85, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "E-mail", a: "বৈদ্যুতিন চিঠি", cat: "E", meta: "র.বো.'২৪; র.বো.'২৩" },
+            { id: 86, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Existentialism", a: "অস্তিত্ববাদ", cat: "E", meta: "চ.বো.'২৪" },
+            { id: 87, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Era", a: "যুগ", cat: "E", meta: "ঢা.বো.'২৩" },
+            { id: 88, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Estimate", a: "প্রাক্কলন/মূল্যানুমান", cat: "E", meta: "চ.বো.'২২" },
+            { id: 89, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Eye-witness", a: "প্রত্যক্ষদর্শী", cat: "E", meta: "ঢা.বো.'১৯" },
+            { id: 90, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "External", a: "বাহ্য/বহিঃস্থ/বৈদেশিক", cat: "E", meta: "য.বো.'১৯" },
+            { id: 91, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Evaluation", a: "মূল্যায়ন", cat: "E", meta: "দি.বো.'১৯" },
+            { id: 92, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "File", a: "নথি", cat: "F", meta: "ঢা.বো., য.বো.'২৫; চ.বো.'১৯" },
+            { id: 93, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Fiction", a: "কথাসাহিত্য/কল্পকাহিনি", cat: "F", meta: "সি.বো.'২৫, ১৭; ব.বো.'২৫; ঢা.বো.'২৩, ১৯; চ.বো.'২২; য.বো.'১৭" },
+            { id: 94, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Fitness", a: "যোগ্যতা", cat: "F", meta: "চ.বো.'২৫" },
+            { id: 95, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Forecast", a: "পূর্বাভাস", cat: "F", meta: "য.বো.'২৫, ২৩; কু.বো.'২৫; য.বো.'২৪; ব.বো., ঢা.বো.'১৭" },
+            { id: 96, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Fundamental", a: "মৌলিক/প্রধান/মূল", cat: "F", meta: "কু.বো.'২৫; চ.বো.'২৪, ১৯; য.বো., ম.বো.'২৪; দি.বো.'২৩" },
+            { id: 97, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Fascism", a: "ফ্যাসিবাদ", cat: "F", meta: "দি.বো.'২৫" },
+            { id: 98, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Famine", a: "দুর্ভিক্ষ", cat: "F", meta: "ম.বো.'২৫" },
+            { id: 99, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "First aid", a: "প্রাথমিক চিকিৎসা", cat: "F", meta: "রা.বো.'২৪, ২৩" },
+            { id: 100, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Farce", a: "প্রহসন", cat: "F", meta: "ব.বো.'২৪; দি.বো.'১৯" },
+            { id: 101, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Foreign-Aid", a: "বৈদেশিক সাহায্য", cat: "F", meta: "দি.বো.'২৪" },
+            { id: 102, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Fine-arts", a: "চারুকলা", cat: "F", meta: "য.বো.'২২; ব.বো., সি.বো.'১৯; কু.বো.'১৭" },
+            { id: 103, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Face value", a: "অভিহিত মূল্য", cat: "F", meta: "সকল বো.'১৮" },
+            { id: 104, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Global", a: "বৈশ্বিক", cat: "G", meta: "ঢা.বো.'২৫, ১৭; রা.বো.'২৫; ম.বো.'২৩; দি.বো.'১৯" },
+            { id: 105, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Galaxy", a: "ছায়াপথ", cat: "G", meta: "রা.বো., য. বো.'২৫; ঢা.বো.'২৪; সি.বো., দি.বো.'২৩; চ.বো.'১৯" },
+            { id: 106, page: "p69-right", pageLabel: "পৃষ্ঠা ৬৯ (ডান)", q: "Gratuity", a: "পারিতোষিক/আনুতোষিক", cat: "G", meta: "ব.বো.'২৫, ২৩; রা.বো.'২৪" },
+            { id: 107, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Graduate", a: "স্নাতক", cat: "G", meta: "য.বো.'২৫" },
+            { id: 108, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Governing body", a: "পরিচালনা পর্ষদ", cat: "G", meta: "কু.বো.'২৫; য.বো.'২৪" },
+            { id: 109, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Globalisation", a: "বিশ্বায়ন", cat: "G", meta: "দি.বো.'২৪; ঢা.বো.'২৩" },
+            { id: 110, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Gazetted", a: "ঘোষিত", cat: "G", meta: "আলিম'২৪" },
+            { id: 111, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Geology", a: "ভূতত্ত্ব", cat: "G", meta: "ঢা.বো.'২৩" },
+            { id: 112, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Generation", a: "প্রজন্ম", cat: "G", meta: "চ.বো.'২৩" },
+            { id: 113, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Goods", a: "পণ্য/মাল", cat: "G", meta: "কু.বো.'২৩; ম.বো.'২২" },
+            { id: 114, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Gain", a: "লাভ/অর্জন", cat: "G", meta: "ম.বো.'২৩" },
+            { id: 115, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Grant", a: "অনুদান/মঞ্জুরি", cat: "G", meta: "রা.বো.'১৯" },
+            { id: 116, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Guilty", a: "অপরাধী", cat: "G", meta: "চ.বো.'২২" },
+            { id: 117, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Green room", a: "সাজঘর", cat: "G", meta: "য.বো.'২২" },
+            { id: 118, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Green-house", a: "সবুজ বলয়/গ্রিন হাউজ", cat: "G", meta: "চ.বো., সি.বো, য.বো.'১৭" },
+            { id: 119, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Home-ministry", a: "স্বরাষ্ট্র মন্ত্রণালয়", cat: "H", meta: "ঢা.বো.'২৫; চ.বো., য.বো.'১৯; দি.বো.'১৭" },
+            { id: 120, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Hybrid", a: "সংকর", cat: "H", meta: "চ.বো.'২৫" },
+            { id: 121, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Hygiene", a: "স্বাস্থ্যবিদ্যা", cat: "H", meta: "ব.বো., ম.বো.'২৫; সি.বো.'২৩; ঢা.বো., য.বো.'২২; সকল বো.'১৮" },
+            { id: 122, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Hostage", a: "জিম্মি", cat: "H", meta: "ঢা.বো., রা.বো., চ.বো.'২৪; য.বো.'২৩; রা.বো., দি.বো.'১৯" },
+            { id: 123, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Hand-Bill", a: "ইশতাহার/প্রচারপত্র", cat: "H", meta: "রা.বো.'২৪" },
+            { id: 124, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Handicraft", a: "হস্তশিল্প", cat: "H", meta: "য.বো.'২৪" },
+            { id: 125, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Humanity", a: "মানবতা", cat: "H", meta: "কু.বো.'২৪" },
+            { id: 126, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Highway", a: "মহাসড়ক/প্রধান পথ", cat: "H", meta: "চ.বো.'২৩" },
+            { id: 127, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Headline", a: "সংবাদ শিরোনাম/শিরোনাম", cat: "H", meta: "চ.বো., কু.বো.'২৩" },
+            { id: 128, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Hood", a: "বোরকা/বোরখা/ঢাকনা", cat: "H", meta: "ঢা.বো.'২২" },
+            { id: 129, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Hoarder", a: "মজুতদার", cat: "H", meta: "দি.বো.'২৫; রা.বো.'২২" },
+            { id: 130, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Hostile", a: "শত্রুভাবাপন্ন", cat: "H", meta: "য.বো.'২২" },
+            { id: 131, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Idiom", a: "বাগ্ধারা", cat: "I", meta: "রা.বো.'২৪, ২৫; ম.বো.'২৪; কু.বো.'২৩; ব.বো.'১৯; চ.বো.'১৭" },
+            { id: 132, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Impeachment", a: "অভিশংসন", cat: "I", meta: "চ.বো.'২৫; কু.বো.'২৩; রা.বো.'১৭" },
+            { id: 133, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Irrigation", a: "সেচ", cat: "I", meta: "ম.বো.'২৫; কু.বো.'২২" },
+            { id: 134, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Interim", a: "অন্তর্বর্তীকালীন", cat: "I", meta: "দি.বো.'২৫" },
+            { id: 135, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Index", a: "সূচক/নির্ঘণ্ট", cat: "I", meta: "আলিম'২৫; দি.বো.'২৩" },
+            { id: 136, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Isolation", a: "সঙ্গনিরোধ/বিচ্ছিন্নতা", cat: "I", meta: "ব.বো.'২৪; রা.বো.'২২" },
+            { id: 137, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Immigrant", a: "অভিবাসী", cat: "I", meta: "ঢা.বো.'২৩; দি.বো.'১৯" },
+            { id: 138, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Interpreter", a: "দোভাষী", cat: "I", meta: "ব.বো.'২৩; দ.বো.'১৯" },
+            { id: 139, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Installment", a: "কিস্তি/দফা", cat: "I", meta: "য.বো.'২৩" },
+            { id: 140, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Initial", a: "প্রারম্ভিক/অনুস্বাক্ষর", cat: "I", meta: "সকল বো.'১৮" },
+            { id: 141, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Justice", a: "বিচারপতি", cat: "J", meta: "রা.বো.'২৫; কু.বো., ম.বো.'২৪; সি.বো.'২৩; সকল বো.'১৮; য.বো.'১৭" },
+            { id: 142, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Jail code", a: "কারা সংহিতা/কারাবিধি", cat: "J", meta: "ঢা.বো.'২৩" },
+            { id: 143, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Judgement", a: "রায়/বিচার", cat: "J", meta: "য.বো.'২৩" },
+            { id: 144, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Jail", a: "কারাগার/জেলখানা", cat: "J", meta: "দি.বো.'২৩" },
+            { id: 145, page: "p70-left", pageLabel: "পৃষ্ঠা ৭০ (বাম)", q: "Journal", a: "পত্রিকা", cat: "J", meta: "য.বো.'২২" },
+            { id: 146, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Kingdom", a: "রাজ্য", cat: "K", meta: "ঢা.বো.'২৩" },
+            { id: 147, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Keyword", a: "মূল শব্দ", cat: "K", meta: "দি.বো.'২৩" },
+            { id: 148, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Kindergarten", a: "কিন্ডারগার্টেন/শিশুবিদ্যালয়/বিদ্যানিকেতন", cat: "K", meta: "ব.বো.'১৯" },
+            { id: 149, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Legend", a: "কিংবদন্তি", cat: "L", meta: "ঢা.বো.'২৫; রা.বো.'২৫, ২৪, ১৭; চ.বো.'২৫; ম.বো.'২৫, ২৩; ব.বো., দি.বো.'২৪, ২২, ১৯, ১৭; সি.বো., কু.বো.'১৭" },
+            { id: 150, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Leap-year", a: "অধিবর্ষ", cat: "L", meta: "ব.বো.'২৫; ঢা.বো.'১৯" },
+            { id: 151, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Lock-up", a: "হাজত", cat: "L", meta: "ঢা.বো.'২৪" },
+            { id: 152, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Lease", a: "ইজারা", cat: "L", meta: "চ.বো.'২৪; ঢা.বো., সি.বো., ব.বো.'১৭" },
+            { id: 153, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Leaflet", a: "প্রচারপত্র", cat: "L", meta: "ম.বো.'২৪; দি.বো.'২৩" },
+            { id: 154, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Liberal", a: "উদার", cat: "L", meta: "ঢা.বো.'২৩" },
+            { id: 155, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "List", a: "তালিকা", cat: "L", meta: "চ.বো.'২৩" },
+            { id: 156, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Lien", a: "পূর্বস্বত্ব", cat: "L", meta: "ব.বো.'২৩" },
+            { id: 157, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Light year", a: "আলোকবর্ষ", cat: "L", meta: "ঢা.বো.'২২" },
+            { id: 158, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Latitude", a: "অক্ষাংশ", cat: "L", meta: "রা.বো.'১৯" },
+            { id: 159, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Landscape", a: "ভূ-দৃশ্য", cat: "L", meta: "ব.বো., কু.বো.'১৯" },
+            { id: 160, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Monarchy", a: "রাজতন্ত্র", cat: "M", meta: "ঢা.বো.'২৪" },
+            { id: 161, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Myth", a: "অতিকথা/পৌরাণিক কাহিনি/পুরাণ", cat: "M", meta: "য.বো.'২৫; চ.বো., দি.বো.'২৪; ম.বো.'২৩; সকল বো.'১৮, কু.বো.'১৭" },
+            { id: 162, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Memorandum", a: "স্মারকলিপি", cat: "M", meta: "সি.বো., ম.বো.'২৫; কু.বো.'২৫, ২৪, ২৩, ২২" },
+            { id: 163, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Manuscript", a: "পাণ্ডুলিপি", cat: "M", meta: "সি.বো.'২৫; আলিম'২৪; চ.বো., রা.বো., দি.বো.'২৩; য.বো.'২২" },
+            { id: 164, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Manifesto", a: "ইশতাহার", cat: "M", meta: "ব.বো.'২৫; য.বো., ২৩, ২২; ম.বো.'২২; চ.বো., দি.বো.'১৯; চ.বো.'১৭" },
+            { id: 165, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Miscreant", a: "দুষ্কৃতকারী", cat: "M", meta: "কু.বো.'২৫; চ.বো.'২৪" },
+            { id: 166, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Manpower", a: "জনশক্তি", cat: "M", meta: "দি.বো.'২৫" },
+            { id: 167, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Mythology", a: "পুরাণতত্ত্ব", cat: "M", meta: "ব.বো.'২৪" },
+            { id: 168, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Millennium", a: "সহস্রাব্দ", cat: "M", meta: "য.বো.'২৪" },
+            { id: 169, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Mail", a: "ডাক", cat: "M", meta: "চ.বো.'২৩" },
+            { id: 170, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Motion", a: "গতি", cat: "M", meta: "ম.বো.'২৩" },
+            { id: 171, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Marketing", a: "বিপণন", cat: "M", meta: "ঢা.বো.'১৭" },
+            { id: 172, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Museum", a: "জাদুঘর/সংগ্রহশালা", cat: "M", meta: "রা.বো.'১৭" },
+            { id: 173, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Measure", a: "মাপ/পরিমাপ করা", cat: "M", meta: "চ.বো.'১৭" },
+            { id: 174, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "National Assembly", a: "জাতীয় সংসদ", cat: "N", meta: "ঢা.বো.'২৫" },
+            { id: 175, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Nebula", a: "নীহারিকা", cat: "N", meta: "য.বো.'২৫; ব.বো.'১৯" },
+            { id: 176, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Notice", a: "বিজ্ঞপ্তি", cat: "N", meta: "আলিম'২৫" },
+            { id: 177, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Nomination", a: "মনোনয়ন", cat: "N", meta: "রা.বো.'২৪; ঢা.বো.'২৩" },
+            { id: 178, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Notice board", a: "বিজ্ঞপ্তি ফলক", cat: "N", meta: "কু.বো.'২৪" },
+            { id: 179, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Note", a: "মন্তব্য", cat: "N", meta: "দি.বো.'২৪; য.বো.'২৩; ম.বো.'২২; চ.বো.'১৯" },
+            { id: 180, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Nationalism", a: "স্বাদেশিকতা/দেশাত্মবোধ", cat: "N", meta: "সি.বো.'২৪; কু.বো.'২২" },
+            { id: 181, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Neutral", a: "নিরপেক্ষ", cat: "N", meta: "কু.বো.'২৩" },
+            { id: 182, page: "p70-right", pageLabel: "পৃষ্ঠা ৭০ (ডান)", q: "Newspaper", a: "সংবাদপত্র/পত্রিকা", cat: "N", meta: "দি.বো.'২৩" },
+            { id: 183, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Nursery", a: "শিশুশালা/তরুশালা", cat: "N", meta: "সি.বো.'২২; ঢা.বো.'১৯; চ.বো., য.বো.'১৭" },
+            { id: 184, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Nationalization", a: "জাতীয়করণ", cat: "N", meta: "কু.বো.'২২" },
+            { id: 185, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Nutrition", a: "পুষ্টি", cat: "N", meta: "দি.বো.'১৯; রা.বো.'১৭" },
+            { id: 186, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Organization", a: "সংস্থা", cat: "O", meta: "ঢা.বো.'২৫" },
+            { id: 187, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Ordinance", a: "অধ্যাদেশ", cat: "O", meta: "চ.বো.'২৫; ব.বো.'২৪, ১৯; কু.বো.'১৯" },
+            { id: 188, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Octave", a: "অষ্টক", cat: "O", meta: "চ.বো., দি.বো., আলিম'২৫; কু.বো.'২৫, ২৪" },
+            { id: 189, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Optional", a: "ঐচ্ছিক", cat: "O", meta: "য.বো.'২৫" },
+            { id: 190, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Option", a: "ইচ্ছা", cat: "O", meta: "ম.বো.'২৫; কু.বো.'২৩" },
+            { id: 191, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Obedient", a: "বাধ্য/অনুগত", cat: "O", meta: "আলিম'২৫" },
+            { id: 192, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Oath", a: "শপথ", cat: "O", meta: "ঢা.বো.'২৪, ২৩; ম.বো.'২৪; সি.বো., দি.বো.'২৩; চ.বো.'১৯; ঢা.বো., রা.বো., য.বো.'১৭" },
+            { id: 193, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Orbit", a: "কক্ষপথ", cat: "O", meta: "ম.বো.'২৩" },
+            { id: 194, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Passport", a: "ছাড়পত্র", cat: "P", meta: "ঢা.বো.'২৫" },
+            { id: 195, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Pensions", a: "অবসর ভাতা", cat: "P", meta: "ঢা.বো.'২৫" },
+            { id: 196, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Public Works", a: "গণপূর্ত", cat: "P", meta: "রা.বো.'২৫, ২৩; কু.বো.'২৫, ২৪; ব.বো., য.বো.'২৩; ঢা.বো.'২২; চ.বো.'১৭" },
+            { id: 197, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Proctor", a: "প্রক্টর/প্ররক্ষক", cat: "P", meta: "চ.বো.'২৫" },
+            { id: 198, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Plosive", a: "স্পর্শবর্ণীয়/ধ্বনি", cat: "P", meta: "য.বো.'২৫; রা.বো.'১৯" },
+            { id: 199, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Pay-bill", a: "বেতন-বিল", cat: "P", meta: "দি.বো.'২৫; দি.বো.'২৪" },
+            { id: 200, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Parliament", a: "আইনসভা/সংসদ", cat: "P", meta: "আলিম'২৫" },
+            { id: 201, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Principle", a: "তত্ত্ব/সূত্র/নীতি", cat: "P", meta: "আলিম'২৫; ঢা.বো.'১৯; রা.বো., ব.বো.'১৭" },
+            { id: 202, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Public opinion", a: "জনমত", cat: "P", meta: "ঢা.বো.'২৪" },
+            { id: 203, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Payee", a: "প্রাপক", cat: "P", meta: "ব.বো.'২৪" },
+            { id: 204, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Penal code", a: "দণ্ডবিধি", cat: "P", meta: "কু.বো.'২৪" },
+            { id: 205, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Prefix", a: "উপসর্গ/অগ্রে যুক্ত করা", cat: "P", meta: "কু.বো.'২৪; দি.বো.'১৯" },
+            { id: 206, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Public", a: "জনসাধারণ", cat: "P", meta: "দি.বো.'২৪" },
+            { id: 207, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Para", a: "অনুচ্ছেদ", cat: "P", meta: "রা.বো.'২৩; ঢা.বো.'১৯" },
+            { id: 208, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Plant", a: "উদ্ভিদ", cat: "P", meta: "চ.বো., ম.বো.'২৩" },
+            { id: 209, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Postpaid", a: "পরে প্রদত্ত/পরে প্রদান", cat: "P", meta: "ব.বো.'২৩" },
+            { id: 210, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Pole", a: "মেরু", cat: "P", meta: "ম.বো.'২৩" },
+            { id: 211, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Portal", a: "দরজা/প্রবেশপথ/ফটক", cat: "P", meta: "ম.বো.'২২" },
+            { id: 212, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Prepaid", a: "প্রাক-পরিশোধিত/আগাম প্রদত্ত", cat: "P", meta: "সি.বো.'২২" },
+            { id: 213, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Provost", a: "প্রাধ্যক্ষ", cat: "P", meta: "কু.বো.'২২" },
+            { id: 214, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Primitive", a: "আদিম", cat: "P", meta: "ম.বো.'২২" },
+            { id: 215, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Parade", a: "কুচকাওয়াজ", cat: "P", meta: "ব.বো.'১৯" },
+            { id: 216, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Prescription", a: "ব্যবস্থাপত্র", cat: "P", meta: "রা.বো.'১৯" },
+            { id: 217, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Power house", a: "বিদ্যুৎকেন্দ্র/শক্তিঘর", cat: "P", meta: "সকল বো.'১৮" },
+            { id: 218, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Pen-friend", a: "পত্র-মিতা", cat: "P", meta: "ঢা.বো.'১৭" },
+            { id: 219, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Quota", a: "যথাংশ/কোটা/নির্ধারিত অংশ", cat: "Q", meta: "য.বো.'২৫" },
+            { id: 220, page: "p71-left", pageLabel: "পৃষ্ঠা ৭১ (বাম)", q: "Quarantine", a: "সঙ্গরোধ", cat: "Q", meta: "ঢা.বো., ম.বো.'২৪" },
+            { id: 221, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Quack", a: "হাতুড়ে (ডাক্তার)", cat: "Q", meta: "আলিম'২৪, রা.বো., সি.বো.'২৩; দি.বো.'২২" },
+            { id: 222, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Quantity", a: "পরিমাণ/মাত্রা", cat: "Q", meta: "চ.বো.'২৩" },
+            { id: 223, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Quality", a: "গুণ", cat: "Q", meta: "কু.বো.'২৩; চ.বো.'১৯" },
+            { id: 224, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Quarter", a: "চতুর্থাংশ/সিকি", cat: "Q", meta: "ব.বো.'১৯" },
+            { id: 225, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Queue", a: "সারি/সারিবদ্ধভাবে দাঁড়ানো", cat: "Q", meta: "সকল বো.'১৮" },
+            { id: 226, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Republic", a: "প্রজাতন্ত্র", cat: "R", meta: "ঢা.বো.'২৫, ১৯; ম.বো., আলিম'২৪" },
+            { id: 227, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Range", a: "এলাকা", cat: "R", meta: "ঢা.বো.'২৫" },
+            { id: 228, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Racism", a: "জাতি-বৈষম্য/বর্ণবাদ", cat: "R", meta: "সি.বো.'২৫, ২৩, ১৭; র.বো.'২৪, কু.বো.'২৩; য.বো.'১৯" },
+            { id: 229, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Ratio", a: "অনুপাত", cat: "R", meta: "ব.বো.'২৫" },
+            { id: 230, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Radio", a: "বেতার যন্ত্র", cat: "R", meta: "য.বো.'২৫" },
+            { id: 231, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Reform", a: "সংস্কার", cat: "R", meta: "ম.বো., দি.বো.'২৫; ঢা.বো.'২৪; রা.বো.'২২" },
+            { id: 232, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Reward", a: "পুরস্কার", cat: "R", meta: "আলিম'২৫" },
+            { id: 233, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Renew", a: "নবায়ন", cat: "R", meta: "রা.বো.'২৪, ২৩; চ.বো.'২৩" },
+            { id: 234, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Relationship", a: "সম্পর্ক", cat: "R", meta: "চ.বো.'২৪" },
+            { id: 235, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Refugee", a: "বাস্তুহারা/উদ্বাস্তু", cat: "R", meta: "য.বো., কু.বো.'২৪" },
+            { id: 236, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Rank", a: "পদমর্যাদা/পদবি", cat: "R", meta: "দি.বো.'২৪, ১৭; ম.বো.'২৩; চ.বো.'১৯" },
+            { id: 237, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Registration", a: "নিবন্ধন", cat: "R", meta: "দি.বো.'২৪" },
+            { id: 238, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Realism", a: "বাস্তববাদ", cat: "R", meta: "ঢা.বো.'২৩" },
+            { id: 239, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Referendum", a: "গণভোট", cat: "R", meta: "দি.বো.'২২; চ.বো.'১৭" },
+            { id: 240, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Rational", a: "যুক্তিবাদী/যুক্তিসিদ্ধ", cat: "R", meta: "ব.বো.'১৯" },
+            { id: 241, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Rotation", a: "আবর্তন", cat: "R", meta: "দি.বো.'১৯" },
+            { id: 242, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Retirement", a: "অবসর গ্রহণ", cat: "R", meta: "ঢা.বো.'১৭" },
+            { id: 243, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Sanction", a: "অনুমোদন/মঞ্জুরি", cat: "S", meta: "ঢা.বো.'২৫; ম.বো.'২৪" },
+            { id: 244, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Symbol", a: "প্রতীক/চিহ্ন", cat: "S", meta: "ঢা.বো.'২৫; দি.বো.'১৯" },
+            { id: 245, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Surplus", a: "উদ্বৃত্ত", cat: "S", meta: "চ.বো.'২৫; ব.বো.'২৩" },
+            { id: 246, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Specialist", a: "বিশেষজ্ঞ", cat: "S", meta: "ব.বো.'২৫" },
+            { id: 247, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Secretary", a: "সচিব", cat: "S", meta: "য.বো.'২৫" },
+            { id: 248, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Subsidy", a: "ভরতুকি", cat: "S", meta: "ম.বো.'২৫; য.বো., দি.বো.'২২; ঢা.বো., কু.বো.'১৭" },
+            { id: 249, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Session", a: "অধিবেশন", cat: "S", meta: "ঢা.বো.'২৪" },
+            { id: 250, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Sponsor", a: "পোষক", cat: "S", meta: "রা.বো.'২৪; কু.বো.'২৩" },
+            { id: 251, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Superintendent", a: "অধীক্ষক", cat: "S", meta: "চ.বো.'২৪" },
+            { id: 252, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Sabotage", a: "অন্তর্ঘাত", cat: "S", meta: "আলিম'২৪; ঢা.বো.'২৩, ১৭; চ.বো.'১৯; সকল বো.'১৮" },
+            { id: 253, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Signal", a: "সংকেত", cat: "S", meta: "রা.বো.'২৩" },
+            { id: 254, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Skill", a: "দক্ষতা", cat: "S", meta: "চ.বো.'২৩" },
+            { id: 255, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Stamp", a: "ডাকটিকিট", cat: "S", meta: "ব.বো.'২৩" },
+            { id: 256, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Study", a: "অধ্যয়ন", cat: "S", meta: "রা.বো.'২২" },
+            { id: 257, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Secular", a: "ধর্মনিরপেক্ষ/পার্থিব", cat: "S", meta: "কু.বো.'২২; চ.বো.'১৯" },
+            { id: 258, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Significant", a: "গুরুত্বপূর্ণ", cat: "S", meta: "ম.বো.'২২" },
+            { id: 259, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Skull", a: "করোটি/মাথার খুলি", cat: "S", meta: "ঢা.বো.'১৯" },
+            { id: 260, page: "p71-right", pageLabel: "পৃষ্ঠা ৭১ (ডান)", q: "Settlement", a: "নিষ্পত্তি", cat: "S", meta: "য.বো.'১৯" },
+            { id: 261, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Tribunal", a: "ন্যায়পীঠ/বিচারালয়", cat: "T", meta: "সি.বো.'২৫" },
+            { id: 262, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Training", a: "প্রশিক্ষণ", cat: "T", meta: "য.বো.'২৫" },
+            { id: 263, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Tax", a: "কর", cat: "T", meta: "য.বো.'২৫" },
+            { id: 264, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Theory", a: "তত্ত্ব/সূত্র", cat: "T", meta: "য.বো.'২৫; চ.বো.'১৯" },
+            { id: 265, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Thesis", a: "গবেষণা সার/অভিসন্দর্ভ", cat: "T", meta: "দি.বো.'২৫" },
+            { id: 266, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Tradition", a: "ঐতিহ্য", cat: "T", meta: "ম.বো.'২৫; চ.বো.'২৩" },
+            { id: 267, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Terminology", a: "পরিভাষা", cat: "T", meta: "য.বো.'২৪; ব.বো.'২৩" },
+            { id: 268, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Tally", a: "হিসাব", cat: "T", meta: "ম.বো.'২৪" },
+            { id: 269, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Transport", a: "পরিবহণ", cat: "T", meta: "রা.বো.'২৩" },
+            { id: 270, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Token", a: "প্রতীক", cat: "T", meta: "সি.বো.'২৩; ঢা.বো.'১৭" },
+            { id: 271, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Trial", a: "বিচার", cat: "T", meta: "ঢা.বো.'১৭" },
+            { id: 272, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Up-to-date", a: "হালনাগাদ", cat: "U", meta: "সি.বো.'২৫, ২৩; ব.বো.'২৩" },
+            { id: 273, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Urban", a: "পৌর/নগর", cat: "U", meta: "ব.বো.'২৪; চ.বো., রা.বো.'২৩; ঢা.বো.'১৯" },
+            { id: 274, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Union", a: "সংঘ", cat: "U", meta: "য.বো.'২৪" },
+            { id: 275, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Uniform", a: "উর্দি", cat: "U", meta: "ম.বো.'২৪; ঢা.বো.'১৭" },
+            { id: 276, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Undertaking", a: "প্রতিশ্রুতি/অঙ্গীকার", cat: "U", meta: "রা.বো.'১৯" },
+            { id: 277, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Viva voce", a: "মৌখিক পরীক্ষা", cat: "V", meta: "ম.বো.'২৫" },
+            { id: 278, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Valid", a: "বৈধ", cat: "V", meta: "আলিম'২৫; ম.বো.'২৩" },
+            { id: 279, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Vacation", a: "ছুটি/অবকাশ", cat: "V", meta: "রা.বো., ব.বো., আলিম'২৪; য.বো.'২৩, ২২" },
+            { id: 280, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Vision", a: "দৃষ্টি/রূপকল্প", cat: "V", meta: "ব.বো.'২৪; চ.বো.'১৯" },
+            { id: 281, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Violation", a: "লঙ্ঘন", cat: "V", meta: "য.বো.'২৪" },
+            { id: 282, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Vocation", a: "বৃত্তি", cat: "V", meta: "ম.বো.'২৪" },
+            { id: 283, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Vaccine", a: "টিকা", cat: "V", meta: "রা.বো.'২৩" },
+            { id: 284, page: "p72-left", pageLabel: "পৃষ্ঠা ৭২ (বাম)", q: "Vehicle", a: "গাড়ি/যান", cat: "V", meta: "চ.বো.'২৩" },
+            { id: 285, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Virus", a: "ভাইরাস/জীবাণু", cat: "V", meta: "চ.বো.'২২" },
+            { id: 286, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Validity", a: "বৈধতা", cat: "V", meta: "রা.বো.'১৭" },
+            { id: 287, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "White-paper", a: "শ্বেতপত্র", cat: "W", meta: "চ.বো., দি.বো.'২৫; য.বো.'২২" },
+            { id: 288, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Worship", a: "পূজা", cat: "W", meta: "সি.বো.'২৫" },
+            { id: 289, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Walk-out", a: "সভাবর্জন/বয়কট", cat: "W", meta: "ব.বো.'২৫; য.বো., দি.বো., আলিম'২৪; চ.বো.'২৩; ঢা.বো.'১৭" },
+            { id: 290, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "War crime", a: "যুদ্ধাপরাধ", cat: "W", meta: "কু.বো.'২৫; চ.বো.'২৪; সি.বো.'২৩; ব.বো.'২২" },
+            { id: 291, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "War-criminal", a: "যুদ্ধাপরাধী", cat: "W", meta: "ঢা.বো.'২৪; রা.বো.'১৭" },
+            { id: 292, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Wit", a: "বুদ্ধি/রসিকতা", cat: "W", meta: "ব.বো.'২৪" },
+            { id: 293, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Weekend", a: "সপ্তাহান্তিক কাল", cat: "W", meta: "ম.বো.'২৪" },
+            { id: 294, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Will", a: "ইচ্ছাপত্র/দানপত্র", cat: "W", meta: "ঢা.বো.'২৩" },
+            { id: 295, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "X-ray", a: "রঞ্জন-রশ্মি", cat: "X", meta: "ব.বো.'২৫; আলিম'২৪" },
+            { id: 296, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Xerox", a: "ফটোকপিকরণ", cat: "X", meta: "সি.বো.'২২" },
+            { id: 297, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Year Book", a: "বর্ষপঞ্জি", cat: "Y", meta: "আলিম'২৫" },
+            { id: 298, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Zoom", a: "জুম", cat: "Z", meta: "দি.বো.'২৪" },
+            { id: 299, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Zonal office", a: "আঞ্চলিক কার্যালয়", cat: "Z", meta: "ম.বো.'২৪" },
+            { id: 300, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Zodiac", a: "রাশিচক্র", cat: "Z", meta: "ঢা.বো.'২৩" },
+            { id: 301, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Zone", a: "অঞ্চল", cat: "Z", meta: "রা.বো.'২৩" },
+            { id: 302, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Agenda", a: "আলোচ্যসূচি", cat: "A", meta: "রা.বো., কু.বো.'২৫" },
+            { id: 303, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Jeweler", a: "মণিকার/স্বর্ণকার", cat: "J", meta: "ফৌজদারহাট ক্যাডেট কলেজ, চট্টগ্রাম" },
+            { id: 304, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Absolute", a: "চূড়ান্ত/সর্বোচ্চ", cat: "A", meta: "হলিক্রস কলেজ, ঢাকা" },
+            { id: 305, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Gist", a: "সারকথা/সারমর্ম", cat: "G", meta: "বিএএফ শাহীন কলেজ, ঢাকা" },
+            { id: 306, page: "p72-right", pageLabel: "পৃষ্ঠা ৭২ (ডান)", q: "Syntax", a: "বাক্যপ্রকরণ", cat: "S", meta: "শহীদ পুলিশ স্মৃতি কলেজ, ঢাকা" },
+            { id: 307, page: "extra", pageLabel: "সম্ভাব্য প্রশ্ন", q: "Adaptation", a: "অভিযোজন", cat: "A", meta: "" },
+            { id: 308, page: "extra", pageLabel: "সম্ভাব্য প্রশ্ন", q: "Civil law", a: "দেওয়ানি আইন", cat: "C", meta: "" }
+        ];
+
+        // =========================================================================
+        // CHAPTER REGISTRY  (নতুন চ্যাপ্টার যোগ করতে এখানে একটি এন্ট্রি দিন)
+        //   type: 'sentence' = বাক্যে দাগ দেওয়া শব্দ → শ্রেণি | 'term' = ইংরেজি শব্দ → বাংলা পরিভাষা
+        // =========================================================================
+        function buildTermsOpts(cards) {
+            const seen = {}, pages = [], letters = {};
+            cards.forEach(c => {
+                if (!seen[c.page]) { seen[c.page] = { label: c.pageLabel, first: c.id, last: c.id }; pages.push(c.page); }
+                seen[c.page].last = c.id;
+                letters[c.cat] = (letters[c.cat] || 0) + 1;
+            });
+            return {
+                pageOpts: `<option value="all">সব পৃষ্ঠা (১ - ${toBanglaNum(cards.length)})</option>` +
+                    pages.map(p => `<option value="${p}">${seen[p].label} (${toBanglaNum(seen[p].first)}-${toBanglaNum(seen[p].last)})</option>`).join(''),
+                catOpts: `<option value="all">সব অক্ষর (A–Z)</option>` +
+                    Object.keys(letters).sort().map(l => `<option value="${l}">${l} (${toBanglaNum(letters[l])}টি)</option>`).join('')
+            };
+        }
+        const CHAPTERS = {
+            grammar: {
+                id: 'grammar', type: 'sentence', icon: 'fa-spell-check', cards: GRAMMAR_CARDS,
+                title: 'ব্যাকরণিক শব্দশ্রেণি নির্ণয়', short: 'শব্দশ্রেণি নির্ণয়',
+                catLabel: 'শব্দশ্রেণি অনুযায়ী:',
+                frontLabel: 'নিচে দাগ দেওয়া শব্দটির শ্রেণি কী?', backLabel: 'সঠিক ব্যাকরণিক শব্দশ্রেণি',
+                quizPrompt: 'নিচের বাক্যে দাগ দেওয়া শব্দটি কোন শব্দশ্রেণির?', searchPh: 'বাক্য বা উত্তর লিখে খুঁজুন...',
+                pageOpts: document.getElementById('filter-page').innerHTML,
+                catOpts: document.getElementById('filter-category').innerHTML
+            },
+            terms: Object.assign({
+                id: 'terms', type: 'term', icon: 'fa-language', cards: TERMS_CARDS,
+                title: 'পারিভাষিক শব্দ', short: 'পারিভাষিক শব্দ',
+                catLabel: 'ইংরেজি শব্দের প্রথম অক্ষর:',
+                frontLabel: 'এই ইংরেজি শব্দের বাংলা পরিভাষা কী?', backLabel: 'সঠিক বাংলা পরিভাষা',
+                quizPrompt: 'এই ইংরেজি শব্দটির সঠিক বাংলা পরিভাষা কোনটি?', searchPh: 'ইংরেজি বা বাংলা শব্দ, বোর্ড লিখে খুঁজুন...'
+            }, buildTermsOpts(TERMS_CARDS))
+        };
+        let currentChapter = 'grammar';
+        let rawCardsData = GRAMMAR_CARDS;
+        const ch = () => CHAPTERS[currentChapter];
+
+        // =========================================================================
+        // STATE MANAGEMENT
+        // =========================================================================
+        let filteredDeck = [...rawCardsData];
+        let currentIndex = 0;
+        let isFlipped = false;
+        let currentMode = 'flashcard'; // 'flashcard' | 'quiz' | 'list'
+        let cardStatusMap = {}; // { [id]: 'mastered' | 'review' }
+        let savedCardsMap = {}; // { [id]: true } for starred/saved questions
+        let showListAnswers = true;
+
+        // Quiz State
+        let quizCurrentCard = null;
+        let quizTotalAnswered = 0;
+        let quizCorrectCount = 0;
+        let quizStreak = 0;
+        let quizAnsweredCurrent = false;
+
+        // Cloud & Fallback Storage State
+        let cloudSaveHandler = null;
+
+        // Helper: Convert English digits to Bengali digits
+        function toBanglaNum(num) {
+            const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+            return String(num).replace(/\d/g, d => banglaDigits[d]);
+        }
+
+        // Extract underlined words from HTML string
+        function extractTargetWords(htmlStr) {
+            const matches = [...htmlStr.matchAll(/<u>(.*?)<\/u>/g)];
+            return matches.map(m => m[1]).join(', ');
+        }
+
+        // Update Sync Indicator UI in Header
+        function updateSyncStatusUI(state, message) {
+            const badge = document.getElementById('sync-status-badge');
+            const icon = document.getElementById('sync-icon');
+            const text = document.getElementById('sync-text');
+            if (!badge || !icon || !text) return;
+
+            text.textContent = message;
+            if (state === 'syncing') {
+                icon.className = "fa-solid fa-arrows-rotate text-indigo-500 animate-spin";
+            } else if (state === 'saved') {
+                icon.className = "fa-solid fa-cloud text-emerald-500";
+            } else if (state === 'local') {
+                icon.className = "fa-solid fa-floppy-disk text-emerald-500";
+            } else if (state === 'offline') {
+                icon.className = "fa-solid fa-cloud-bolt text-amber-500";
+            }
+        }
+
+        // ---------- localStorage persistence ----------
+        const STORE_KEY = 'hsc-bangla-flashcards-v1';
+        let storeReady = false;
+        let lastUpdatedAt = 0;
+        const $val = id => document.getElementById(id).value;
+
+        // Store v2: { v:2, ui:{chapter,mode,theme,showListAnswers}, chapters:{ [id]:{cardStatusMap,savedCardsMap,updatedAt,ui:{page,cat,status,cardId,quiz}} } }
+        // v1 (আগের একক-চ্যাপ্টার ডেটা) স্বয়ংক্রিয়ভাবে "grammar" চ্যাপ্টারে মাইগ্রেট হয়।
+        function readStore() {
+            let s = null;
+            try { s = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) {}
+            if (!s || typeof s !== 'object') s = {};
+            if (s.v !== 2) {
+                const u = s.ui || {};
+                s = { v: 2,
+                    ui: { chapter: 'grammar', mode: u.mode, theme: u.theme, showListAnswers: u.showListAnswers },
+                    chapters: { grammar: { cardStatusMap: s.cardStatusMap || {}, savedCardsMap: s.savedCardsMap || {}, updatedAt: s.updatedAt || 0,
+                        ui: { page: u.page, cat: u.cat, status: u.status, cardId: u.cardId, quiz: u.quiz } } } };
+            }
+            s.ui = s.ui || {}; s.chapters = s.chapters || {};
+            return s;
+        }
+        function writeStore(mutate) {
+            try { const s = readStore(); mutate(s); localStorage.setItem(STORE_KEY, JSON.stringify(s)); return true; }
+            catch (e) { return false; }
+        }
+        function chapterSlot(s) { return (s.chapters[currentChapter] = s.chapters[currentChapter] || {}); }
+        function persistProgress(touch) {
+            if (!storeReady) return;
+            if (touch) lastUpdatedAt = Date.now();
+            const ok = writeStore(s => { const c = chapterSlot(s); c.cardStatusMap = cardStatusMap; c.savedCardsMap = savedCardsMap; c.updatedAt = lastUpdatedAt; });
+            if (!ok && typeof updateSyncStatusUI === 'function') updateSyncStatusUI('offline', 'সেভ করা যাচ্ছে না');
+        }
+        function persistUI() {
+            if (!storeReady) return;
+            const card = filteredDeck[currentIndex];
+            writeStore(s => {
+                Object.assign(s.ui, { chapter: currentChapter, mode: currentMode, showListAnswers,
+                    theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light' });
+                chapterSlot(s).ui = { page: $val('filter-page'), cat: $val('filter-category'), status: $val('filter-status'),
+                    cardId: card ? card.id : null, quiz: { t: quizTotalAnswered, c: quizCorrectCount, s: quizStreak } };
+            });
+        }
+        function cleanMap(obj, allowed) {
+            const out = {};
+            const ids = new Set(rawCardsData.map(c => String(c.id)));
+            if (obj && typeof obj === 'object') Object.keys(obj).forEach(k => {
+                if (ids.has(k) && (!allowed || allowed.includes(obj[k]))) out[k] = obj[k];
+            });
+            return out;
+        }
+        function setSelect(id, v) {
+            const el = document.getElementById(id);
+            if (v && [...el.options].some(o => o.value === v)) el.value = v;
+        }
+        function loadSavedState() {
+            const s = readStore();
+            if (typeof s.ui.showListAnswers === 'boolean') showListAnswers = s.ui.showListAnswers;
+            syncThemeIcon();
+            switchChapter(CHAPTERS[s.ui.chapter] ? s.ui.chapter : 'grammar', true);
+            storeReady = true;
+            switchMode(['flashcard', 'quiz', 'list'].includes(s.ui.mode) ? s.ui.mode : 'flashcard');
+            persistUI();
+        }
+
+        // ---------- Chapters ----------
+        function chapterStats(id) {
+            const cards = CHAPTERS[id].cards;
+            const map = id === currentChapter ? cardStatusMap : ((readStore().chapters[id] || {}).cardStatusMap || {});
+            const ids = new Set(cards.map(c => String(c.id)));
+            let done = 0;
+            Object.keys(map).forEach(k => { if (map[k] === 'mastered' && ids.has(k)) done++; });
+            return { done, total: cards.length };
+        }
+        function renderChapterBar() {
+            document.getElementById('chapter-bar-inner').innerHTML = Object.values(CHAPTERS).map(c => {
+                const on = c.id === currentChapter, st = chapterStats(c.id), pct = Math.round(st.done / st.total * 100);
+                return `<button onclick="switchChapter('${c.id}')" aria-pressed="${on}" class="snap-start flex-1 min-w-[148px] lg:max-w-sm text-left rounded-2xl p-2 sm:p-3 border-2 flex items-center gap-2.5 sm:gap-3 transition-all ${on ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/40 shadow-sm' : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700'}">
+                    <span class="w-8 h-8 sm:w-11 sm:h-11 shrink-0 rounded-xl flex items-center justify-center text-base sm:text-lg ${on ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-indigo-500'}"><i class="fa-solid ${c.icon}"></i></span>
+                    <span class="min-w-0 flex-1">
+                        <span class="block font-bold text-sm truncate ${on ? 'text-indigo-700 dark:text-indigo-300' : 'text-slate-700 dark:text-slate-200'}"><span class="sm:hidden">${c.short}</span><span class="hidden sm:inline">${c.title}</span></span>
+                        <span class="block text-xs text-slate-500 dark:text-slate-400">${toBanglaNum(c.cards.length)}টি কার্ড • ${toBanglaNum(st.done)} আয়ত্ত</span>
+                        <span class="hidden sm:block mt-1.5 h-1.5 rounded-full bg-slate-200/80 dark:bg-slate-700 overflow-hidden"><span class="block h-full bg-emerald-500 transition-all" style="width:${pct}%"></span></span>
+                    </span>
+                </button>`;
+            }).join('');
+        }
+        function applyChapterUI() {
+            const c = ch();
+            document.getElementById('filter-page').innerHTML = c.pageOpts;
+            document.getElementById('filter-category').innerHTML = c.catOpts;
+            document.querySelector('label[for="filter-category"]').textContent = c.catLabel;
+            document.getElementById('fc-front-label').textContent = c.frontLabel;
+            document.getElementById('fc-back-label').textContent = c.backLabel;
+            document.getElementById('quiz-prompt').textContent = c.quizPrompt;
+            document.getElementById('search-input').placeholder = c.searchPh;
+            document.getElementById('header-sub').textContent = `${c.title} • ${toBanglaNum(c.cards.length)}টি`;
+        }
+        function switchChapter(id, init) {
+            if (!CHAPTERS[id] || (!init && id === currentChapter)) return;
+            const was = storeReady;
+            if (!init) persistUI();
+            storeReady = false;
+            currentChapter = id; rawCardsData = CHAPTERS[id].cards;
+            const c = readStore().chapters[id] || {}, ui = c.ui || {};
+            cardStatusMap = cleanMap(c.cardStatusMap, ['mastered', 'review']);
+            savedCardsMap = cleanMap(c.savedCardsMap);
+            lastUpdatedAt = c.updatedAt || 0;
+            const q = ui.quiz || {};
+            quizTotalAnswered = +q.t || 0; quizCorrectCount = +q.c || 0; quizStreak = +q.s || 0;
+            quizCurrentCard = null; quizAnsweredCurrent = false;
+            applyChapterUI();
+            setSelect('filter-page', ui.page); setSelect('filter-category', ui.cat); setSelect('filter-status', ui.status);
+            document.getElementById('search-input').value = '';
+            currentIndex = 0;
+            updateQuizScoreUI();
+            updateProgressUI();
+            applyFilters();
+            if (ui.cardId) {
+                const idx = filteredDeck.findIndex(x => x.id === ui.cardId);
+                if (idx >= 0) { currentIndex = idx; renderCurrentCard(); }
+            }
+            storeReady = was;
+            persistUI();
+            if (!init) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showToast(CHAPTERS[id].title);
+                if (typeof window.cloudSwitchChapter === 'function') window.cloudSwitchChapter(id);
+            }
+        }
+        window.getCurrentChapterId = () => currentChapter;
+
+        // ---------- Quiz helpers ----------
+        const splitAns = s => s.split(/[\/,]/).map(x => x.trim()).filter(Boolean);
+        function quizCorrectValue(card) { return ch().type === 'term' ? card.a : card.cat; }
+        function quizDistractors(card) {
+            if (ch().type !== 'term') return allCategories.filter(c => c !== card.cat);
+            const mine = splitAns(card.a);
+            return [...new Set(rawCardsData.map(c => c.a))].filter(a => a !== card.a && !splitAns(a).some(p => mine.includes(p)));
+        }
+
+        function updateQuizScoreUI() {
+            const ss = document.getElementById('setup-quiz-score'), st = document.getElementById('setup-quiz-streak');
+            if (ss) { ss.textContent = `${toBanglaNum(quizCorrectCount)}/${toBanglaNum(quizTotalAnswered)}`; st.textContent = toBanglaNum(quizStreak); }
+            document.getElementById('quiz-score').textContent = `${toBanglaNum(quizCorrectCount)}/${toBanglaNum(quizTotalAnswered)}`;
+            document.getElementById('quiz-streak').textContent = toBanglaNum(quizStreak);
+        }
+        function syncThemeIcon() {
+            document.getElementById('theme-icon').className = document.documentElement.classList.contains('dark') ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+
+        // ---------- Mode switching, toast, filter panel ----------
+        const TAB_BASE = "flex-1 sm:flex-none px-3 py-2.5 sm:py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 text-sm font-medium ";
+        const TAB_ON = "bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm";
+        const TAB_OFF = "text-slate-600 dark:text-slate-300 hover:text-indigo-600";
+        // ---------- Mobile screen navigation (home → setup → practice/quiz, home → list) ----------
+        const isMobile = () => window.matchMedia('(max-width:1023px)').matches;
+        let currentScreen = 'home';
+        const SCREEN_MODE = { practice: 'flashcard', quiz: 'quiz', list: 'list' };
+        const MODE_LABEL = { flashcard: 'ফ্ল্যাশকার্ড', quiz: 'কুইজ', list: 'তালিকা' };
+        function updateSetupUI() {
+            const b = document.getElementById('setup-start');
+            if (!b) return;
+            const label = currentMode === 'quiz' ? 'কুইজ শুরু করুন' : 'শুরু করুন';
+            b.innerHTML = `${label} (${toBanglaNum(filteredDeck.length)}) <i class="fa-solid fa-arrow-right"></i>`;
+        }
+        function updateScreenBar() {
+            const t = document.getElementById('screen-title');
+            if (t) t.textContent = `${ch().short} • ${MODE_LABEL[currentMode]}`;
+        }
+        function setScreen(s, fromPop, replace) {
+            closeCompletion();
+            currentScreen = s;
+            document.body.dataset.screen = s;
+            if (!fromPop && isMobile()) history[replace ? 'replaceState' : 'pushState']({ screen: s, depth: replace ? ((history.state && history.state.depth) || 0) : ((history.state && history.state.depth) || 0) + 1 }, '');
+            if (fromPop && SCREEN_MODE[s] && currentMode !== SCREEN_MODE[s]) switchMode(SCREEN_MODE[s]);
+            updateScreenBar(); updateSetupUI();
+            window.scrollTo(0, 0);
+        }
+        function navMode(mode) {
+            switchMode(mode);
+            if (isMobile()) setScreen(mode === 'list' ? 'list' : 'setup', false, currentScreen === 'setup' || currentScreen === 'list');
+        }
+        function startFromSetup() {
+            if (currentMode !== 'quiz' && filteredDeck.length === 0) { showToast('এই ফিল্টারে কোনো কার্ড পাওয়া যায়নি!'); return; }
+            if (currentMode !== 'quiz') resetSessionPosition(); // Start = a fresh session from card 1
+            setScreen(currentMode === 'quiz' ? 'quiz' : 'practice');
+        }
+        function goBack() {
+            if (history.state && history.state.screen) history.back();
+            else setScreen(currentScreen === 'practice' || currentScreen === 'quiz' ? 'setup' : 'home', true);
+        }
+        window.addEventListener('popstate', e => setScreen((e.state && e.state.screen) || 'home', true));
+        try { history.replaceState({ screen: 'home', depth: 0 }, ''); } catch (e) {}
+
+        function switchMode(mode) {
+            currentMode = mode;
+            document.body.dataset.mode = mode;
+            ['flashcard', 'quiz', 'list'].forEach(m => {
+                const on = m === mode;
+                const v = document.getElementById('view-' + m);
+                v.classList.toggle('hidden', !on);
+                v.classList.toggle('flex', on);
+                document.getElementById('tab-' + m).className = TAB_BASE + (on ? TAB_ON : TAB_OFF);
+            });
+            document.getElementById('app-main').classList.toggle('fc', mode === 'flashcard');
+            if (mode === 'quiz' && !quizCurrentCard) loadNextQuizQuestion();
+            if (mode === 'list') { renderListView(); updateAnswersToggleUI(); }
+            updateScreenBar(); updateSetupUI();
+            persistUI();
+        }
+        function toggleFilterPanel(force) {
+            const body = document.getElementById('filter-body');
+            const open = typeof force === 'boolean' ? force : !body.classList.contains('open');
+            body.classList.toggle('open', open);
+            document.getElementById('sheet-backdrop').classList.toggle('hidden', !open);
+            document.getElementById('filter-toggle').setAttribute('aria-expanded', open);
+            document.body.style.overflow = (open && window.matchMedia('(max-width:1023px)').matches) ? 'hidden' : '';
+        }
+        window.matchMedia('(min-width:1024px)').addEventListener('change', () => toggleFilterPanel(false));
+        let toastTimer;
+        function showToast(msg) {
+            let el = document.getElementById('toast');
+            if (!el) { el = document.createElement('div'); el.id = 'toast'; el.className = 'toast px-4 py-2 rounded-xl bg-slate-800 dark:bg-slate-100 text-white dark:text-slate-800 text-sm font-medium shadow-lg'; document.body.appendChild(el); }
+            el.textContent = msg; el.classList.add('show');
+            clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 1600);
+        }
+        function updateAnswersToggleUI() {
+            document.getElementById('icon-toggle-answers').className = showListAnswers ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+            document.getElementById('text-toggle-answers').textContent = showListAnswers ? 'সব উত্তর লুকান' : 'সব উত্তর দেখান';
+        }
+        function toggleAllListAnswers() { showListAnswers = !showListAnswers; updateAnswersToggleUI(); renderListView(); persistUI(); }
+        function toggleListCardStatus(id, status) {
+            if (cardStatusMap[id] === status) delete cardStatusMap[id]; else cardStatusMap[id] = status;
+            saveProgress();
+            if (['review', 'mastered', 'unmastered'].includes($val('filter-status'))) applyFilters();
+            else { renderListView(); renderCurrentCard(); }
+        }
+        function fitCardText() {
+            const c = filteredDeck[currentIndex]; if (!c) return;
+            const term = ch().type === 'term';
+            const el = document.getElementById('card-front-sentence');
+            const n = c.q.replace(/<[^>]+>/g, '').length;
+            el.classList.remove('text-2xl', 'sm:text-3xl', 'text-xl', 'text-lg', 'sm:text-2xl', 'text-3xl', 'sm:text-4xl', 'text-4xl', 'sm:text-5xl');
+            el.classList.add(...(term ? (n > 18 ? ['text-3xl', 'sm:text-4xl'] : ['text-4xl', 'sm:text-5xl'])
+                : (n > 70 ? ['text-lg', 'sm:text-2xl'] : n > 40 ? ['text-xl', 'sm:text-3xl'] : ['text-2xl', 'sm:text-3xl'])));
+            const bk = document.getElementById('card-back-answer');
+            bk.classList.remove('text-3xl', 'sm:text-4xl', 'text-2xl', 'sm:text-3xl');
+            bk.classList.add('leading-snug', ...(c.a.length > 14 ? ['text-2xl', 'sm:text-3xl'] : ['text-3xl', 'sm:text-4xl']));
+        }
+
+        function saveProgress() {
+            persistProgress(true);
+            updateProgressUI();
+            if (typeof cloudSaveHandler === 'function') {
+                cloudSaveHandler(cardStatusMap, savedCardsMap);
+            }
+        }
+
+        function updateProgressUI() {
+            let masteredCount = 0;
+            let reviewCount = 0;
+            Object.values(cardStatusMap).forEach(st => {
+                if (st === 'mastered') masteredCount++;
+                if (st === 'review') reviewCount++;
+            });
+
+            const savedCount = Object.keys(savedCardsMap).filter(k => savedCardsMap[k]).length;
+
+            document.getElementById('stat-mastered').textContent = toBanglaNum(masteredCount);
+            document.getElementById('stat-review').textContent = toBanglaNum(reviewCount);
+            document.getElementById('stat-saved').textContent = toBanglaNum(savedCount);
+            document.getElementById('stat-total').textContent = toBanglaNum(rawCardsData.length);
+
+            const masteredPct = (masteredCount / rawCardsData.length) * 100;
+            const savedPct = (savedCount / rawCardsData.length) * 100;
+            const reviewPct = (reviewCount / rawCardsData.length) * 100;
+
+            renderChapterBar();
+            document.getElementById('progress-text').textContent = `${toBanglaNum(masteredCount)} / ${toBanglaNum(rawCardsData.length)} আয়ত্ত`;
+            document.getElementById('bar-mastered').style.width = `${masteredPct}%`;
+            document.getElementById('bar-saved').style.width = `${savedPct}%`;
+            document.getElementById('bar-review').style.width = `${reviewPct}%`;
+        }
+
+        // Quick Filter Pill Actions
+        function setQuickFilter(statusValue) {
+            document.getElementById('filter-status').value = statusValue;
+            if (statusValue === 'all') {
+                document.getElementById('filter-category').value = 'all';
+                document.getElementById('filter-page').value = 'all';
+            }
+            updateQuickPillStyles();
+            applyFilters();
+        }
+
+        function setQuickCategory(catValue) {
+            const catSelect = document.getElementById('filter-category');
+            if (catSelect.value === catValue) {
+                catSelect.value = 'all';
+            } else {
+                catSelect.value = catValue;
+            }
+            updateQuickPillStyles();
+            applyFilters();
+        }
+
+        function updateQuickPillStyles() {
+            const statusVal = document.getElementById('filter-status').value;
+            const catVal = document.getElementById('filter-category').value;
+
+            const nActive = ['filter-page', 'filter-category', 'filter-status'].filter(id => $val(id) !== 'all').length;
+            const badge = document.getElementById('filter-active-badge');
+            badge.textContent = toBanglaNum(nActive);
+            badge.classList.toggle('hidden', nActive === 0);
+            badge.classList.toggle('flex', nActive > 0);
+
+            const pills = {
+                all: document.getElementById('qpill-all'),
+                saved: document.getElementById('qpill-saved'),
+                review: document.getElementById('qpill-review'),
+                mastered: document.getElementById('qpill-mastered'),
+                onusorgo: document.getElementById('qpill-onusorgo')
+            };
+
+            pills.onusorgo.style.display = ch().type === 'sentence' ? '' : 'none';
+            // Reset default look
+            pills.all.className = "px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap " + 
+                (statusVal === 'all' && catVal === 'all' ? "bg-indigo-600 text-white shadow-sm" : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200");
+            
+            pills.saved.className = "px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap " + 
+                (statusVal === 'saved' ? "bg-amber-500 text-white shadow-sm" : "bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800");
+
+            pills.review.className = "px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap " + 
+                (statusVal === 'review' ? "bg-rose-600 text-white shadow-sm" : "bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800");
+
+            pills.mastered.className = "px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap " + 
+                (statusVal === 'mastered' ? "bg-emerald-600 text-white shadow-sm" : "bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800");
+
+            pills.onusorgo.className = "px-3 h-10 rounded-xl text-[13px] font-semibold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap " + 
+                (catVal === 'অনুসর্গ' ? "bg-purple-600 text-white shadow-sm" : "bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800");
+        }
+
+        // =========================================================================
+        // FILTERING & DECK FUNCTIONS
+        // =========================================================================
+        function applyFilters() {
+            sessionShuffled = false;
+            const pageFilter = document.getElementById('filter-page').value;
+            const catFilter = document.getElementById('filter-category').value;
+            const statusFilter = document.getElementById('filter-status').value;
+
+            updateQuickPillStyles();
+
+            filteredDeck = rawCardsData.filter(card => {
+                const matchPage = (pageFilter === 'all') || (card.page === pageFilter);
+                const matchCat = (catFilter === 'all') || (card.cat === catFilter);
+                
+                let matchStatus = true;
+                const st = cardStatusMap[card.id];
+                const isSaved = !!savedCardsMap[card.id];
+
+                if (statusFilter === 'saved') matchStatus = isSaved;
+                else if (statusFilter === 'review') matchStatus = (st === 'review');
+                else if (statusFilter === 'mastered') matchStatus = (st === 'mastered');
+                else if (statusFilter === 'unmastered') matchStatus = (st !== 'mastered');
+
+                return matchPage && matchCat && matchStatus;
+            });
+
+            if (currentIndex >= filteredDeck.length) {
+                currentIndex = 0;
+            }
+            unflipCardImmediate();
+            renderCurrentCard();
+            if (currentMode === 'quiz') loadNextQuizQuestion();
+            if (currentMode === 'list') renderListView();
+            updateSetupUI();
+        }
+
+        function shuffleDeck() {
+            sessionShuffled = true;
+            for (let i = filteredDeck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [filteredDeck[i], filteredDeck[j]] = [filteredDeck[j], filteredDeck[i]];
+            }
+            currentIndex = 0;
+            unflipCardImmediate();
+            renderCurrentCard();
+        }
+
+        // =========================================================================
+        // FLASHCARD MODE LOGIC
+        // =========================================================================
+        function renderCurrentCard() { _renderCurrentCard(); fitCardText(); persistUI(); }
+        function _renderCurrentCard() {
+            const frontSentenceEl = document.getElementById('card-front-sentence');
+            const backAnswerEl = document.getElementById('card-back-answer');
+            const backPreviewEl = document.getElementById('card-back-sentence-preview');
+            const backTargetEl = document.getElementById('card-back-target');
+            const backIdEl = document.getElementById('card-back-id');
+            const counterBadge = document.getElementById('card-counter-badge');
+            const pageBadge = document.getElementById('card-page-badge');
+            const statusIndicator = document.getElementById('card-status-indicator');
+            const savedIndicator = document.getElementById('card-saved-indicator');
+            const topSaveBtn = document.getElementById('btn-top-save');
+            const topSaveIcon = document.getElementById('icon-top-save');
+            const topSaveText = document.getElementById('text-top-save');
+
+            if (filteredDeck.length === 0) {
+                frontSentenceEl.innerHTML = `<span class="text-slate-400 text-lg">এই ফিল্টারে কোনো কার্ড পাওয়া যায়নি! ফিল্টার পরিবর্তন করুন বা নতুন প্রশ্ন সেভ করুন।</span>`;
+                backAnswerEl.textContent = "—";
+                backPreviewEl.textContent = "";
+                backTargetEl.textContent = "";
+                counterBadge.textContent = "০ / ০";
+                pageBadge.textContent = "খালি";
+                statusIndicator.classList.add('hidden');
+                savedIndicator.classList.add('hidden');
+                return;
+            }
+
+            const card = filteredDeck[currentIndex];
+            frontSentenceEl.innerHTML = card.q;
+            backAnswerEl.textContent = card.a;
+            backPreviewEl.innerHTML = card.q;
+            if (ch().type === 'term') {
+                backTargetEl.textContent = card.meta ? `এসেছে: ${card.meta}` : '';
+            } else {
+                const targetWords = extractTargetWords(card.q);
+                backTargetEl.textContent = targetWords ? `দাগ দেওয়া শব্দ: "${targetWords}"` : '';
+            }
+            backIdEl.textContent = `#${toBanglaNum(card.id)}`;
+
+            counterBadge.textContent = `কার্ড ${toBanglaNum(currentIndex + 1)} / ${toBanglaNum(filteredDeck.length)}`;
+            pageBadge.textContent = `${card.pageLabel} • প্রশ্ন #${toBanglaNum(card.id)}`;
+
+            // Update Saved / Starred state
+            const isSaved = !!savedCardsMap[card.id];
+            if (isSaved) {
+                savedIndicator.classList.remove('hidden');
+                topSaveIcon.className = "fa-solid fa-star text-amber-500";
+                topSaveText.textContent = "সংরক্ষিত";
+                topSaveBtn.className = "h-10 min-w-10 justify-center px-2.5 sm:px-3 rounded-xl text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 flex items-center gap-1.5 shadow-sm transition-all";
+            } else {
+                savedIndicator.classList.add('hidden');
+                topSaveIcon.className = "fa-regular fa-star text-amber-500";
+                topSaveText.textContent = "সেভ করুন";
+                topSaveBtn.className = "h-10 min-w-10 justify-center px-2.5 sm:px-3 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-amber-400 text-slate-700 dark:text-slate-200 flex items-center gap-1.5 shadow-sm transition-all";
+            }
+
+            // Update status indicator on card
+            const status = cardStatusMap[card.id];
+            if (status === 'mastered') {
+                statusIndicator.className = "text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300";
+                statusIndicator.innerHTML = `<i class="fa-solid fa-check mr-1"></i>আয়ত্তে আছে`;
+            } else if (status === 'review') {
+                statusIndicator.className = "text-xs font-semibold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300";
+                statusIndicator.innerHTML = `<i class="fa-solid fa-bookmark mr-1"></i>আবার পড়ব`;
+            } else {
+                statusIndicator.classList.add('hidden');
+            }
+        }
+
+        function toggleCurrentCardSaved(e) {
+            if (e) e.stopPropagation();
+            if (filteredDeck.length === 0) return;
+            const card = filteredDeck[currentIndex];
+            if (savedCardsMap[card.id]) {
+                delete savedCardsMap[card.id];
+            } else {
+                savedCardsMap[card.id] = true;
+            }
+            saveProgress();
+            // If currently filtering by 'saved', re-apply filters
+            if (document.getElementById('filter-status').value === 'saved') {
+                applyFilters();
+            } else {
+                renderCurrentCard();
+            }
+        }
+
+        function flipCard() {
+            if (filteredDeck.length === 0 || completionOpen) return;
+            isFlipped = !isFlipped;
+            const inner = document.getElementById('flashcard-inner');
+            if (isFlipped) {
+                inner.classList.add('rotate-y-180');
+            } else {
+                inner.classList.remove('rotate-y-180');
+            }
+        }
+
+        function unflipCardImmediate() {
+            isFlipped = false;
+            const inner = document.getElementById('flashcard-inner');
+            inner.classList.remove('rotate-y-180');
+        }
+
+        // Session = the current filteredDeck (already filtered and, if shuffled, in shuffled order).
+        // Moving past its last card ends the session; it never wraps back to card 1 on its own.
+        let completionOpen = false, sessionShuffled = false, navLock = false;
+        function nextCard() {
+            if (filteredDeck.length === 0 || completionOpen || navLock) return;
+            if (currentIndex >= filteredDeck.length - 1) { showCompletion(); return; }
+            navLock = true;
+            unflipCardImmediate();
+            setTimeout(() => {
+                navLock = false;
+                if (completionOpen) return;
+                currentIndex = Math.min(currentIndex + 1, filteredDeck.length - 1);
+                renderCurrentCard();
+            }, 150);
+        }
+
+        function prevCard() {
+            if (filteredDeck.length === 0 || completionOpen || navLock || currentIndex <= 0) return;
+            navLock = true;
+            unflipCardImmediate();
+            setTimeout(() => {
+                navLock = false;
+                currentIndex = Math.max(currentIndex - 1, 0);
+                renderCurrentCard();
+            }, 150);
+        }
+
+        function showCompletion() {
+            if (completionOpen || filteredDeck.length === 0) return;
+            let m = 0, r = 0;
+            filteredDeck.forEach(c => { const st = cardStatusMap[c.id]; if (st === 'mastered') m++; else if (st === 'review') r++; });
+            document.getElementById('complete-total').textContent = toBanglaNum(filteredDeck.length);
+            document.getElementById('complete-mastered').textContent = toBanglaNum(m);
+            document.getElementById('complete-review').textContent = toBanglaNum(r);
+            const modal = document.getElementById('complete-modal');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            completionOpen = true;
+            document.body.style.overflow = 'hidden';
+            document.getElementById('complete-box').focus(); // focus the dialog, not a button, so a habitual Space/Enter can't trigger an action
+        }
+        function closeCompletion() {
+            if (!completionOpen) return;
+            const modal = document.getElementById('complete-modal');
+            modal.classList.add('hidden'); modal.classList.remove('flex');
+            completionOpen = false;
+            document.body.style.overflow = '';
+        }
+        function resetSessionPosition() { currentIndex = 0; unflipCardImmediate(); renderCurrentCard(); }
+        // Explicit restart only: same pool/filters; a shuffled session is reshuffled, others keep their order.
+        function restartPractice() {
+            closeCompletion();
+            if (sessionShuffled) shuffleDeck(); else resetSessionPosition();
+        }
+        function completionGoHome() {
+            closeCompletion();
+            resetSessionPosition();
+            if (!isMobile()) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+            const d = (history.state && history.state.depth) || 0;
+            if (d > 0) history.go(-d); else setScreen('home', true);
+        }
+        function quizFromCompletion() {
+            closeCompletion();
+            resetSessionPosition();
+            switchMode('quiz');
+            if (isMobile()) setScreen('quiz', false, true);
+        }
+
+        function markCardStatus(status) {
+            if (filteredDeck.length === 0 || completionOpen) return;
+            const card = filteredDeck[currentIndex];
+            if (cardStatusMap[card.id] === status) {
+                delete cardStatusMap[card.id];
+            } else {
+                cardStatusMap[card.id] = status;
+            }
+            saveProgress();
+            if (cardStatusMap[card.id]) showToast(status === 'mastered' ? 'পারি ✓ চিহ্নিত' : 'আবার পড়ব তালিকায় যোগ হয়েছে');
+            renderCurrentCard();
+            // Automatically advance to next card after a brief moment
+            setTimeout(() => { nextCard(); }, 250);
+        }
+
+        // =========================================================================
+        // QUIZ MODE LOGIC
+        // =========================================================================
+        const allCategories = ["বিশেষ্য", "সর্বনাম", "বিশেষণ", "ক্রিয়া", "ক্রিয়াবিশেষণ", "অনুসর্গ", "যোজক", "আবেগ"];
+
+        function updateQuizSaveButtonUI() {
+            if (!quizCurrentCard) return;
+            const isSaved = !!savedCardsMap[quizCurrentCard.id];
+            const icon = document.getElementById('icon-quiz-save');
+            const text = document.getElementById('text-quiz-save');
+            const btn = document.getElementById('btn-quiz-save');
+            if (isSaved) {
+                icon.className = "fa-solid fa-star text-amber-500";
+                text.textContent = "সংরক্ষিত";
+                btn.className = "px-2.5 py-1 rounded-lg border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 text-xs font-semibold flex items-center gap-1 transition-all";
+            } else {
+                icon.className = "fa-regular fa-star text-amber-500";
+                text.textContent = "সেভ";
+                btn.className = "px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-medium flex items-center gap-1 hover:border-amber-400 transition-all";
+            }
+        }
+
+        function toggleQuizCardSaved() {
+            if (!quizCurrentCard) return;
+            if (savedCardsMap[quizCurrentCard.id]) {
+                delete savedCardsMap[quizCurrentCard.id];
+            } else {
+                savedCardsMap[quizCurrentCard.id] = true;
+            }
+            saveProgress();
+            updateQuizSaveButtonUI();
+        }
+
+        function loadNextQuizQuestion() {
+            const feedbackBar = document.getElementById('quiz-feedback-bar');
+            feedbackBar.classList.add('hidden');
+            feedbackBar.classList.remove('flex');
+            quizAnsweredCurrent = false;
+
+            const pool = filteredDeck.length > 0 ? filteredDeck : rawCardsData;
+            let pick; do { pick = pool[Math.floor(Math.random() * pool.length)]; } while (pool.length > 1 && quizCurrentCard && pick.id === quizCurrentCard.id);
+            quizCurrentCard = pick;
+
+            document.getElementById('quiz-q-num').textContent = `${quizCurrentCard.pageLabel} • প্রশ্ন #${toBanglaNum(quizCurrentCard.id)}`;
+            const qs = document.getElementById('quiz-sentence');
+            qs.innerHTML = quizCurrentCard.q;
+            qs.className = 'sentence-text font-semibold text-slate-800 dark:text-slate-100 leading-relaxed ' + (ch().type === 'term' ? 'text-3xl sm:text-4xl' : 'text-xl sm:text-2xl');
+            updateQuizSaveButtonUI();
+
+            // Build 4 options (1 correct category + 3 distinct distractors)
+            const correctCat = quizCorrectValue(quizCurrentCard);
+            const distractors = quizDistractors(quizCurrentCard);
+            // Shuffle distractors
+            for (let i = distractors.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [distractors[i], distractors[j]] = [distractors[j], distractors[i]];
+            }
+            const options = [correctCat, ...distractors.slice(0, 3)];
+            // Shuffle final 4 options
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "quiz-opt-btn w-full p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-indigo-500 dark:hover:border-indigo-400 text-left font-semibold text-base flex items-center justify-between transition-all shadow-sm";
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <span class="flex items-center gap-2"><kbd class="hidden sm:inline px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700 rounded text-[11px] text-slate-400 font-normal">${idx + 1}</kbd><i class="fa-regular fa-circle text-slate-400 opt-icon"></i></span>
+                `;
+                btn.onclick = () => checkQuizAnswer(opt, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkQuizAnswer(selectedCat, clickedBtn) {
+            if (quizAnsweredCurrent) return;
+            quizAnsweredCurrent = true;
+            quizTotalAnswered++;
+
+            const correctCat = quizCorrectValue(quizCurrentCard);
+            const isCorrect = (selectedCat === correctCat);
+
+            if (isCorrect) {
+                quizCorrectCount++;
+                quizStreak++;
+                cardStatusMap[quizCurrentCard.id] = 'mastered';
+            } else {
+                quizStreak = 0;
+                cardStatusMap[quizCurrentCard.id] = 'review';
+            }
+            saveProgress();
+
+            // Highlight buttons
+            const allBtns = document.querySelectorAll('.quiz-opt-btn');
+            allBtns.forEach(btn => {
+                const text = btn.querySelector('span').textContent;
+                const icon = btn.querySelector('.opt-icon');
+                btn.disabled = true;
+
+                if (text === correctCat) {
+                    btn.className = "quiz-opt-btn w-full p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 text-left font-bold text-base flex items-center justify-between";
+                    icon.className = "fa-solid fa-circle-check text-emerald-500 text-lg";
+                } else if (btn === clickedBtn && !isCorrect) {
+                    btn.className = "quiz-opt-btn w-full p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 text-left font-bold text-base flex items-center justify-between";
+                    icon.className = "fa-solid fa-circle-xmark text-rose-500 text-lg";
+                } else {
+                    btn.classList.add('opacity-50');
+                }
+            });
+
+            // Update Scoreboard
+            updateQuizScoreUI();
+            persistUI();
+
+            // Show Feedback Bar
+            const feedbackBar = document.getElementById('quiz-feedback-bar');
+            const feedbackText = document.getElementById('quiz-feedback-text');
+            feedbackBar.classList.remove('hidden');
+            feedbackBar.classList.add('flex');
+            if (window.matchMedia('(max-width:639px)').matches) feedbackBar.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+            if (isCorrect) {
+                feedbackText.innerHTML = `<span class="text-emerald-600 dark:text-emerald-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>সঠিক উত্তর!</span> বইয়ের উত্তর: <strong>${quizCurrentCard.a}</strong>`;
+            } else {
+                feedbackText.innerHTML = `<span class="text-rose-600 dark:text-rose-400 font-bold">ভুল হয়েছে!</span> সঠিক উত্তর: <strong>${quizCurrentCard.a}</strong>`;
+            }
+            if (ch().type === 'term' && quizCurrentCard.meta) feedbackText.innerHTML += `<div class="text-xs text-slate-500 dark:text-slate-400 mt-1">এসেছে: ${quizCurrentCard.meta}</div>`;
+        }
+
+        // =========================================================================
+        // LIST / BROWSE MODE LOGIC
+        // =========================================================================
+        function renderListView() {
+            const container = document.getElementById('list-container');
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+
+            const listItems = filteredDeck.filter(card => {
+                if (!query) return true;
+                const plainQ = card.q.replace(/<\/?u>/g, '').toLowerCase();
+                return plainQ.includes(query) || card.a.toLowerCase().includes(query) || String(card.id).includes(query) || (card.meta || '').toLowerCase().includes(query);
+            });
+
+            if (listItems.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400">কোনো প্রশ্ন পাওয়া যায়নি।</div>`;
+                return;
+            }
+
+            container.innerHTML = listItems.map(card => {
+                const st = cardStatusMap[card.id];
+                const isSaved = !!savedCardsMap[card.id];
+                let statusBadge = '';
+                if (st === 'mastered') {
+                    statusBadge = `<span class="text-[11px] px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 font-medium">পারি</span>`;
+                } else if (st === 'review') {
+                    statusBadge = `<span class="text-[11px] px-2 py-0.5 rounded-md bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300 font-medium">আবার পড়ব</span>`;
+                }
+
+                const savedBadge = isSaved ? `<span class="text-[11px] px-2 py-0.5 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300 font-medium"><i class="fa-solid fa-star mr-1"></i>সংরক্ষিত</span>` : '';
+
+                return `
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-sm flex flex-col justify-between gap-3">
+                        <div class="flex items-center justify-between text-xs text-slate-400">
+                            <span>#${toBanglaNum(card.id)} • ${card.pageLabel}</span>
+                            <div class="flex items-center gap-1.5">
+                                ${savedBadge}
+                                ${statusBadge}
+                            </div>
+                        </div>
+                        <p class="sentence-text ${ch().type === 'term' ? 'text-xl sm:text-2xl font-bold' : 'text-base sm:text-lg font-medium'} text-slate-800 dark:text-slate-100">${card.q}</p>
+                        ${ch().type === 'term' && card.meta ? `<p class="text-[11px] leading-relaxed text-slate-400 -mt-1">${card.meta}</p>` : ''}
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-700/60">
+                            <span class="list-answer-chip px-3 py-1 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-950/70 dark:text-indigo-300 transition-opacity ${showListAnswers ? 'opacity-100' : 'opacity-0 hover:opacity-100 cursor-pointer'}" onclick="this.classList.toggle('opacity-0')">
+                                উত্তর: ${card.a}
+                            </span>
+                            <div class="flex items-center gap-1.5">
+                                <button onclick="toggleListCardSaved(${card.id})" class="w-10 h-10 rounded-lg flex items-center justify-center text-xs ${isSaved ? 'bg-amber-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 hover:text-amber-500'}" title="সংরক্ষিত তালিকায় রাখুন">
+                                    <i class="fa-solid fa-star"></i>
+                                </button>
+                                <button onclick="toggleListCardStatus(${card.id}, 'review')" class="w-10 h-10 rounded-lg flex items-center justify-center text-xs ${st === 'review' ? 'bg-rose-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500'}" title="আবার পড়ব">
+                                    <i class="fa-solid fa-bookmark"></i>
+                                </button>
+                                <button onclick="toggleListCardStatus(${card.id}, 'mastered')" class="w-10 h-10 rounded-lg flex items-center justify-center text-xs ${st === 'mastered' ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500'}" title="পারি">
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleListCardSaved(id) {
+            if (savedCardsMap[id]) {
+                delete savedCardsMap[id];
+            } else {
+                savedCardsMap[id] = true;
+            }
+            saveProgress();
+            if (document.getElementById('filter-status').value === 'saved') {
+                applyFilters();
+            } else {
+                renderListView();
+                renderCurrentCard();
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-sun';
+            }
+            persistUI();
+        }
+
+        function resetProgressModal() {
+            const modal = document.getElementById('reset-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeResetModal() {
+            const modal = document.getElementById('reset-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function confirmResetProgress() {
+            cardStatusMap = {};
+            savedCardsMap = {};
+            quizTotalAnswered = 0; quizCorrectCount = 0; quizStreak = 0;
+            updateQuizScoreUI();
+            saveProgress();
+            applyFilters();
+            showToast('প্রগ্রেস রিসেট হয়েছে');
+            closeResetModal();
+        }
+
+        // Keyboard Listeners for Flashcard Mode
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { closeResetModal(); toggleFilterPanel(false); }
+            if (completionOpen) return; // completion is dismissed only by its explicit buttons
+            if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+            if (e.ctrlKey || e.metaKey || e.altKey) return;
+            if (currentMode === 'quiz') {
+                if (/^[1-4]$/.test(e.key)) {
+                    const b = document.querySelectorAll('.quiz-opt-btn')[+e.key - 1];
+                    if (b && !quizAnsweredCurrent) b.click();
+                } else if ((e.key === 'Enter' || e.code === 'Space') && quizAnsweredCurrent && document.activeElement.tagName !== 'BUTTON') {
+                    e.preventDefault(); loadNextQuizQuestion();
+                }
+                return;
+            }
+            if (currentMode !== 'flashcard') return;
+
+            if (e.code === 'Space') {
+                e.preventDefault();
+                flipCard();
+            } else if (e.code === 'ArrowRight') {
+                e.preventDefault();
+                nextCard();
+            } else if (e.code === 'ArrowLeft') {
+                e.preventDefault();
+                prevCard();
+            } else if (e.key === '1') {
+                markCardStatus('review');
+            } else if (e.key === '2') {
+                markCardStatus('mastered');
+            } else if (e.key === 's' || e.key === 'S') {
+                toggleCurrentCardSaved();
+            }
+        });
+
+        // Allow external cloud sync to inject loaded data
+        window.getLocalUpdatedAt = () => lastUpdatedAt;
+        window.pushLocalToCloud = () => { if (typeof cloudSaveHandler === 'function') cloudSaveHandler(cardStatusMap, savedCardsMap); };
+        window.applyCloudData = function(loadedStatusMap, loadedSavedMap, cloudAt) {
+            cloudAt = cloudAt || 0;
+            if (cloudAt === lastUpdatedAt) return;                 // already in sync
+            if (lastUpdatedAt > cloudAt) { window.pushLocalToCloud(); return; }  // this device is newer
+            cardStatusMap = cleanMap(loadedStatusMap, ['mastered', 'review']);
+            savedCardsMap = cleanMap(loadedSavedMap);
+            lastUpdatedAt = cloudAt;
+            persistProgress(false);
+            updateProgressUI();
+            applyFilters();
+        };
+
+        window.registerCloudSaveHandler = function(fn) {
+            cloudSaveHandler = fn;
+        };
+
+        window.updateSyncStatusUI = updateSyncStatusUI;
+
+        // Tap to flip, swipe to navigate (touch)
+        (function () {
+            const el = document.getElementById('card-wrap');
+            let x0 = 0, y0 = 0, swiped = false;
+            el.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; swiped = false; }, { passive: true });
+            el.addEventListener('touchend', e => {
+                const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+                if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { swiped = true; dx < 0 ? nextCard() : prevCard(); }
+            }, { passive: true });
+            el.addEventListener('click', () => { if (swiped) { swiped = false; return; } flipCard(); });
+        })();
+
+        // Initialize Application on Load
+        window.onload = loadSavedState;
+    </script>
+
+    <!-- Cloud Persistence Module (Firebase Firestore + Auth) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'hsc-bangla-flashcards-app';
+        let db = null, auth = null, currentUser = null, unsub = null, progressDocRef = null, activeChapter = null;
+        let isApplyingRemoteUpdate = false;
+        // "grammar" আগের ডকুমেন্টেই থাকে (ব্যাকওয়ার্ড কম্প্যাটিবল); অন্য চ্যাপ্টার আলাদা ডকুমেন্ট
+        const docName = id => id === 'grammar' ? 'userState' : 'userState_' + id;
+
+        function subscribe(id) {
+            if (!currentUser || !db) return;
+            if (unsub) { unsub(); unsub = null; }
+            activeChapter = id;
+            const ref = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'flashcardProgress', docName(id));
+            progressDocRef = ref;
+            unsub = onSnapshot(ref, (snapshot) => {
+                if (activeChapter !== id || window.getCurrentChapterId() !== id) return;
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    isApplyingRemoteUpdate = true;
+                    const st = data.cardStatusMapJson ? JSON.parse(data.cardStatusMapJson) : {};
+                    const sv = data.savedCardsMapJson ? JSON.parse(data.savedCardsMapJson) : {};
+                    window.applyCloudData(st, sv, data.updatedAt);
+                    isApplyingRemoteUpdate = false;
+                } else if (window.getLocalUpdatedAt() > 0) {
+                    window.pushLocalToCloud();
+                }
+                window.updateSyncStatusUI('saved', 'ক্লাউডে সংরক্ষিত');
+            }, (error) => {
+                console.error("Cloud sync listener error:", error);
+                window.updateSyncStatusUI('offline', 'অফলাইন মোড');
+            });
+        }
+
+        async function initCloudStorage() {
+            try {
+                if (typeof __firebase_config === 'undefined' || !__firebase_config) {
+                    window.updateSyncStatusUI('local', 'এই ডিভাইসে সংরক্ষিত');
+                    return;
+                }
+                const app = initializeApp(JSON.parse(__firebase_config));
+                auth = getAuth(app);
+                db = getFirestore(app);
+                window.updateSyncStatusUI('syncing', 'সিঙ্ক হচ্ছে...');
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token);
+                else await signInAnonymously(auth);
+
+                window.registerCloudSaveHandler(async (statusMap, savedMap) => {
+                    if (!currentUser || !progressDocRef || isApplyingRemoteUpdate) return;
+                    const ref = progressDocRef;
+                    try {
+                        window.updateSyncStatusUI('syncing', 'সেভ হচ্ছে...');
+                        await setDoc(ref, {
+                            cardStatusMapJson: JSON.stringify(statusMap || {}),
+                            savedCardsMapJson: JSON.stringify(savedMap || {}),
+                            updatedAt: window.getLocalUpdatedAt() || Date.now()
+                        }, { merge: true });
+                        window.updateSyncStatusUI('saved', 'ক্লাউডে সংরক্ষিত');
+                    } catch (err) {
+                        console.error("Failed to save progress:", err);
+                        window.updateSyncStatusUI('offline', 'সেভ ব্যর্থ');
+                    }
+                });
+                window.cloudSwitchChapter = subscribe;
+                onAuthStateChanged(auth, (user) => { currentUser = user; if (user) subscribe(window.getCurrentChapterId()); });
+            } catch (err) {
+                console.error("Cloud storage init error:", err);
+                window.updateSyncStatusUI('local', 'এই ডিভাইসে সংরক্ষিত');
+            }
+        }
+
+        initCloudStorage();
+    </script>
+</body>
+</html>
